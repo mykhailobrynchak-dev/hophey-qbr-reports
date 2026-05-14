@@ -3,49 +3,707 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Партнерські QBR звіти — Bolt Food UA</title>
+<title>HOP HEY — QBR Bolt Food</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <style>
-:root{--bg:#F8F9FA;--card:#fff;--border:#e5e7eb;--text:#1A1A2E;--muted:#6b7280;--accent:#34D186}
+:root{--bg:#F8F9FA;--card:#fff;--border:#e5e7eb;--text:#1A1A2E;--muted:#6b7280;--green:#34D186;--red:#dc2626;--yellow:#ca8a04;--blue:#2563eb;--purple:#7c3aed;--cyan:#0891b2;--orange:#ea580c;--accent:#34D186;--accent-dark:#1A1A2E}
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,system-ui,sans-serif;line-height:1.65;display:flex;justify-content:center;padding:60px 20px}
-.container{max-width:700px;width:100%}
-h1{font-size:28px;font-weight:700;margin-bottom:8px}
-.subtitle{color:var(--muted);font-size:14px;margin-bottom:40px}
-.brand-list{display:flex;flex-direction:column;gap:12px}
-.brand-card{display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 24px;text-decoration:none;color:var(--text);transition:all .15s;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
-.brand-card:hover{border-color:var(--accent);box-shadow:0 4px 12px rgba(52,209,134,0.15);transform:translateY(-1px)}
-.brand-dot{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#34D186,#1A1A2E);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:12px;flex-shrink:0}
-.brand-name{font-size:18px;font-weight:600}
-.brand-desc{font-size:12px;color:var(--muted);margin-top:2px}
-.arrow{margin-left:auto;color:var(--muted);font-size:20px}
-.footer{margin-top:48px;text-align:center;color:var(--muted);font-size:11px}
+body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,system-ui,sans-serif;line-height:1.65}
+.container{max-width:1380px;margin:0 auto;padding:28px}
+.header{display:flex;align-items:center;gap:20px;margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid var(--border)}
+.logo-dot{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#34D186,#1A1A2E);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}
+h1{font-size:24px;font-weight:700;color:var(--accent-dark)}
+.subtitle{color:var(--muted);font-size:13px;margin-top:2px}
+.report-meta{margin-left:auto;text-align:right;color:var(--muted);font-size:12px}
+h2{font-size:18px;font-weight:700;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border);color:var(--accent-dark)}
+h3{font-size:14px;font-weight:600;margin-bottom:10px}
+.section{margin-bottom:36px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.grid-6{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+.kpi{text-align:center;padding:16px 12px}
+.kpi-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px;line-height:1.3}
+.kpi-value{font-size:26px;font-weight:700}
+.kpi-sub{font-size:11px;margin-top:4px;font-weight:600}
+.up{color:var(--green)}.down{color:var(--red)}.neutral{color:var(--yellow)}.stable{color:var(--muted)}
+.chart-box{position:relative;height:280px}
+.chart-box-lg{position:relative;height:340px}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;padding:8px 10px;border-bottom:2px solid var(--border);color:var(--muted);font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap}
+td{padding:7px 10px;border-bottom:1px solid #f3f4f6}
+tr:hover{background:#f9fafb}
+.badge{display:inline-block;padding:2px 8px;border-radius:99px;font-size:10px;font-weight:600}
+.badge-g{background:#dcfce7;color:#166534}.badge-r{background:#fee2e2;color:#991b1b}.badge-y{background:#fef9c3;color:#854d0e}.badge-b{background:#dbeafe;color:#1e40af}
+.insight{border-left:3px solid var(--blue);background:#eff6ff;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:13px}
+.insight.warn{border-color:var(--orange);background:#fff7ed}
+.insight.good{border-color:var(--green);background:#f0fdf4}
+.insight.action{border-color:var(--purple);background:#f5f3ff}
+.insight-title{font-weight:600;margin-bottom:3px}
+.insight-text{color:var(--muted);font-size:12px}
+.me{color:var(--muted);font-size:10px;font-style:italic;display:block;margin-top:1px}
+.divider{height:1px;background:var(--border);margin:28px 0}
+.store-row{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.store-name{font-size:11px;min-width:340px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-bg{flex:1;height:18px;background:#f3f4f6;border-radius:3px;overflow:hidden}
+.bar-fill{height:100%;border-radius:3px;display:flex;align-items:center;padding-left:6px;font-size:10px;font-weight:600;color:#fff;min-width:24px}
+
+/* Tab navigation */
+.tab-nav{display:flex;gap:4px;margin-bottom:24px;border-bottom:2px solid var(--border);padding-bottom:0}
+.tab-btn{padding:10px 24px;font-size:14px;font-weight:600;border:none;background:transparent;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s}
+.tab-btn.active{color:var(--accent-dark);border-bottom-color:var(--accent)}
+.tab-btn:hover{color:var(--accent-dark)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+@media(max-width:900px){.grid-2,.grid-3,.grid-4,.grid-6{grid-template-columns:1fr}}
+@media print{body{background:#fff}.card{box-shadow:none;border:1px solid #ddd}}
 </style>
 </head>
 <body>
 <div class="container">
-  <h1>Партнерські QBR звіти</h1>
-  <div class="subtitle">Bolt Food UA · Квартальні бізнес-огляди · Автооновлення щопонеділка</div>
 
-  <div class="brand-list" id="brands"></div>
-
-  <div class="footer">Bolt Food UA · Конфіденційно</div>
+<div class="header">
+  <div class="logo-dot">HH</div>
+  <div>
+    <h1>HOP HEY — Квартальний бізнес-огляд (QBR)</h1>
+    <div class="subtitle" id="reportSubtitle">Bolt Food UA · Завантаження...</div>
+  </div>
+  <div class="report-meta" id="reportMeta">Завантаження...</div>
 </div>
 
-<script>
-const brands = [
-  {code:'HH', name:'HOP HEY', folder:'hophey', desc:'Мережа пивних магазинів · Київ, Дніпро та інші міста'},
-];
+<!-- Tab Navigation -->
+<div class="tab-nav">
+  <button class="tab-btn active" data-tab="monthly">Місячні дані</button>
+  <button class="tab-btn" data-tab="weekly">Тижневі дані</button>
+</div>
 
-document.getElementById('brands').innerHTML = brands.map(b =>
-  `<a class="brand-card" href="${b.folder}/">
-    <div class="brand-dot">${b.code}</div>
-    <div>
-      <div class="brand-name">${b.name}</div>
-      <div class="brand-desc">${b.desc}</div>
-    </div>
-    <div class="arrow">→</div>
-  </a>`
-).join('');
+<!-- ═══════════════════════════════════════ -->
+<!-- MONTHLY TAB -->
+<!-- ═══════════════════════════════════════ -->
+<div class="tab-content active" id="tab-monthly">
+
+<!-- KPI SUMMARY -->
+<div class="section" id="m-kpi">
+  <h2>Ключові показники (останній завершений місяць)</h2>
+  <div class="grid-6" id="m-kpi-cards"></div>
+</div>
+
+<!-- 1. GROWTH & SALES -->
+<div class="section" id="m-sales">
+  <h2>1. Зростання та обсяги продажів</h2>
+  <div class="grid-2">
+    <div class="card"><h3>Продажі партнера, €</h3><div class="chart-box"><canvas id="m-cGMV"></canvas></div></div>
+    <div class="card"><h3>Доставлені / Розміщені замовлення</h3><div class="chart-box"><canvas id="m-cOrders"></canvas></div></div>
+  </div>
+  <div class="grid-2" style="margin-top:14px">
+    <div class="card"><h3>Середній чек партнера, €</h3><div class="chart-box"><canvas id="m-cAOV"></canvas></div></div>
+    <div class="card"><h3>Нові / Активні користувачі</h3><div class="chart-box"><canvas id="m-cUsers"></canvas></div></div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>Динаміка продажів</h3>
+    <div style="overflow-x:auto"><table id="m-sales-table"></table></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 2. OPERATIONS DEEP DIVE -->
+<div class="section" id="m-ops">
+  <h2>2. Операційна якість — детальний аналіз</h2>
+  <div class="grid-2">
+    <div class="card"><h3>Частка невдалих / проблемних замовлень, %</h3><div class="chart-box"><canvas id="m-cFail"></canvas></div></div>
+    <div class="card"><h3>Частка якісних замовлень (Honey), %</h3><div class="chart-box"><canvas id="m-cHoney"></canvas></div></div>
+  </div>
+  <div class="grid-2" style="margin-top:14px">
+    <div class="card"><h3>Час доставки / Час кур'єра, хв</h3><div class="chart-box"><canvas id="m-cDuration"></canvas></div></div>
+    <div class="card"><h3>Запізнення доставки / збирання, %</h3><div class="chart-box"><canvas id="m-cLate"></canvas></div></div>
+  </div>
+  <div class="divider" style="margin:20px 0"></div>
+  <h3 style="font-size:16px;margin-bottom:14px">Коригування та заміна товарів</h3>
+  <div class="grid-2">
+    <div class="card"><h3>Коригування замовлень (Adjustment), %</h3><div class="chart-box"><canvas id="m-cAdjust"></canvas></div></div>
+    <div class="card"><h3>Заміна товарів (Replacement), %</h3><div class="chart-box"><canvas id="m-cReplace"></canvas></div></div>
+  </div>
+  <div class="insight" style="margin-top:10px">
+    <div class="insight-text">Заміна товарів (Replacement) є підмножиною коригувань (Adjustment). Тобто Replacement — це лише частина від загального Adjustment Rate, коли товар замінюється на інший, а не просто коригується ціна чи кількість.</div>
+  </div>
+  <div class="divider" style="margin:20px 0"></div>
+  <h3 style="font-size:16px;margin-bottom:14px">Активні заклади, доступність та рейтинг</h3>
+  <div class="grid-2">
+    <div class="card"><h3>Активні заклади / Доступність, %</h3><div class="chart-box"><canvas id="m-cMerchants"></canvas></div></div>
+    <div class="card"><h3>Рейтинг закладів від клієнтів</h3><div class="chart-box"><canvas id="m-cRating"></canvas></div></div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>Зведена таблиця операційних показників</h3>
+    <div style="overflow-x:auto"><table id="m-ops-table"></table></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 3. FAILED ORDERS ANALYSIS -->
+<div class="section" id="m-failed">
+  <h2>3. Аналіз невдалих замовлень</h2>
+  <div class="grid-2">
+    <div class="card"><h3>Невдалі замовлення за причинами</h3><div class="chart-box-lg"><canvas id="m-cFailReasons"></canvas></div></div>
+    <div class="card"><h3>Динаміка частки невдалих, %</h3><div class="chart-box-lg"><canvas id="m-cFailRate"></canvas></div></div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>Деталізація невдалих замовлень за причинами</h3>
+    <div style="overflow-x:auto"><table id="m-fail-table"></table></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 4. INVESTMENT -->
+<div class="section" id="m-invest">
+  <h2>4. Інвестиції у зростання партнерства</h2>
+  <div class="grid-2">
+    <div class="card"><h3>Знижки по кампаніях, €</h3><div class="chart-box"><canvas id="m-cInvest"></canvas></div></div>
+    <div class="card"><h3>Кампанійні замовлення / Знижка % від продажів</h3><div class="chart-box"><canvas id="m-cCampOrders"></canvas></div></div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>Аналіз ефективності кампаній</h3>
+    <div style="overflow-x:auto"><table id="m-camp-table"></table></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 5. MERCHANT NETWORK -->
+<div class="section" id="m-merchants">
+  <h2>5. Мережа закладів</h2>
+  <div class="card">
+    <h3 id="m-top-stores-title">Топ-15 закладів за продажами</h3>
+    <div id="m-top-stores"></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 6. FULL KPI TABLE -->
+<div class="section" id="m-trends">
+  <h2>6. Зведена таблиця за всі місяці</h2>
+  <div class="card" style="overflow-x:auto"><table id="m-kpi-table"></table></div>
+</div>
+
+</div><!-- end monthly tab -->
+
+
+<!-- ═══════════════════════════════════════ -->
+<!-- WEEKLY TAB -->
+<!-- ═══════════════════════════════════════ -->
+<div class="tab-content" id="tab-weekly">
+
+<!-- KPI SUMMARY -->
+<div class="section">
+  <h2 id="w-kpi-title">Ключові показники (останній повний тиждень)</h2>
+  <div class="grid-6" id="w-kpi-cards"></div>
+</div>
+
+<!-- 1. GROWTH & SALES -->
+<div class="section">
+  <h2>1. Зростання та обсяги продажів</h2>
+  <div class="grid-2">
+    <div class="card"><h3>Продажі партнера, €</h3><div class="chart-box"><canvas id="w-cGMV"></canvas></div></div>
+    <div class="card"><h3>Доставлені / Розміщені замовлення</h3><div class="chart-box"><canvas id="w-cOrders"></canvas></div></div>
+  </div>
+  <div class="grid-2" style="margin-top:14px">
+    <div class="card"><h3>Середній чек партнера, €</h3><div class="chart-box"><canvas id="w-cAOV"></canvas></div></div>
+    <div class="card"><h3>Нові / Активні користувачі</h3><div class="chart-box"><canvas id="w-cUsers"></canvas></div></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 2. OPERATIONS -->
+<div class="section">
+  <h2>2. Операційна якість — детальний аналіз</h2>
+  <div class="grid-2">
+    <div class="card"><h3>Частка невдалих / проблемних замовлень, %</h3><div class="chart-box"><canvas id="w-cFail"></canvas></div></div>
+    <div class="card"><h3>Частка якісних замовлень (Honey), %</h3><div class="chart-box"><canvas id="w-cHoney"></canvas></div></div>
+  </div>
+  <div class="grid-2" style="margin-top:14px">
+    <div class="card"><h3>Час доставки / Час кур'єра, хв</h3><div class="chart-box"><canvas id="w-cDuration"></canvas></div></div>
+    <div class="card"><h3>Запізнення доставки / збирання, %</h3><div class="chart-box"><canvas id="w-cLate"></canvas></div></div>
+  </div>
+  <div class="divider" style="margin:20px 0"></div>
+  <h3 style="font-size:16px;margin-bottom:14px">Коригування та заміна товарів</h3>
+  <div class="grid-2">
+    <div class="card"><h3>Коригування замовлень (Adjustment), %</h3><div class="chart-box"><canvas id="w-cAdjust"></canvas></div></div>
+    <div class="card"><h3>Заміна товарів (Replacement), %</h3><div class="chart-box"><canvas id="w-cReplace"></canvas></div></div>
+  </div>
+  <div class="insight" style="margin-top:10px">
+    <div class="insight-text">Заміна товарів (Replacement) є підмножиною коригувань (Adjustment). Тобто Replacement — це лише частина від загального Adjustment Rate, коли товар замінюється на інший, а не просто коригується ціна чи кількість.</div>
+  </div>
+  <div class="divider" style="margin:20px 0"></div>
+  <h3 style="font-size:16px;margin-bottom:14px">Активні заклади, доступність та рейтинг</h3>
+  <div class="grid-2">
+    <div class="card"><h3>Активні заклади / Доступність, %</h3><div class="chart-box"><canvas id="w-cMerchants"></canvas></div></div>
+    <div class="card"><h3>Рейтинг закладів від клієнтів</h3><div class="chart-box"><canvas id="w-cRating"></canvas></div></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 3. FAILED ORDERS -->
+<div class="section">
+  <h2>3. Аналіз невдалих замовлень</h2>
+  <div class="grid-2">
+    <div class="card"><h3>Невдалі замовлення за причинами</h3><div class="chart-box-lg"><canvas id="w-cFailReasons"></canvas></div></div>
+    <div class="card"><h3>Динаміка частки невдалих, %</h3><div class="chart-box-lg"><canvas id="w-cFailRate"></canvas></div></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 4. INVESTMENT -->
+<div class="section">
+  <h2>4. Інвестиції у зростання партнерства</h2>
+  <div class="grid-2">
+    <div class="card"><h3>Знижки по кампаніях, €</h3><div class="chart-box"><canvas id="w-cInvest"></canvas></div></div>
+    <div class="card"><h3>Кампанійні замовлення / Знижка %</h3><div class="chart-box"><canvas id="w-cCampOrders"></canvas></div></div>
+  </div>
+</div>
+
+</div><!-- end weekly tab -->
+
+<div style="text-align:center;color:var(--muted);font-size:11px;margin-top:40px;padding:20px 0;border-top:1px solid var(--border)">
+  HOP HEY × Bolt Food UA · Квартальний бізнес-огляд (QBR) · Конфіденційно
+</div>
+
+</div><!-- end container -->
+
+<script>
+const REPORT_DATA = {"generated_at": "2026-05-14 16:01 UTC", "data_start": "2025-12-01", "weekly_start": "2026-04-13", "weekly_end": "2026-05-10", "partner_name": "HOP HEY", "monthly": {"financial": [{"period": "2025-12", "orders": 493.0, "merchant_price_eur": 3990.031694316375, "merchant_price_per_order": 8.093370576706642, "gmv_eur": 4754.67728667357, "aov_eur": 9.644375835037668, "users_activated": 20.0, "active_users": 388.0, "refund_rate_pct": 0.09018991659190072}, {"period": "2026-01", "orders": 1282.0, "merchant_price_eur": 10806.92808901117, "merchant_price_per_order": 8.429741099072675, "gmv_eur": 13085.311398660935, "aov_eur": 10.20695116900229, "users_activated": 41.0, "active_users": 875.0, "refund_rate_pct": 0.18212095410583523}, {"period": "2026-02", "orders": 2397.0, "merchant_price_eur": 19493.026605904735, "merchant_price_per_order": 8.132259743806731, "gmv_eur": 23838.843244888583, "aov_eur": 9.945282955731575, "users_activated": 85.0, "active_users": 1429.0, "refund_rate_pct": 0.20906672903071546}, {"period": "2026-03", "orders": 2797.0, "merchant_price_eur": 22650.9081442115, "merchant_price_per_order": 8.098286787347693, "gmv_eur": 27002.38023029883, "aov_eur": 9.65405085101853, "users_activated": 85.0, "active_users": 1461.0, "refund_rate_pct": 0.1496550408332358}, {"period": "2026-04", "orders": 2941.0, "merchant_price_eur": 23745.85279172574, "merchant_price_per_order": 8.07407439365037, "gmv_eur": 27750.926854323923, "aov_eur": 9.435881283347134, "users_activated": 75.0, "active_users": 1448.0, "refund_rate_pct": 0.1504685969138415}, {"period": "2026-05", "orders": 1457.0, "merchant_price_eur": 11985.386722396146, "merchant_price_per_order": 8.226071875357684, "gmv_eur": 13948.529069412612, "aov_eur": 9.573458523961985, "users_activated": 23.0, "active_users": 863.0, "refund_rate_pct": 0.10257356150893235}], "operational": [{"period": "2025-12", "delivered_orders": 493.0, "active_stores": 72.0, "honey_order_rate": 25.15212981744422, "bad_order_rate": 17.24137931034483, "late_delivery_rate": 38.5395537525355, "late_pickup_rate": 13.793103448275861, "avg_delivery_minutes": 38.26724137931036, "avg_courier_delivery_min": 35.85966869506422}, {"period": "2026-01", "delivered_orders": 1282.0, "active_stores": 130.0, "honey_order_rate": 26.287051482059283, "bad_order_rate": 19.18876755070203, "late_delivery_rate": 35.49141965678627, "late_pickup_rate": 15.522620904836193, "avg_delivery_minutes": 37.81410556422257, "avg_courier_delivery_min": 35.462922516900676}, {"period": "2026-02", "delivered_orders": 2397.0, "active_stores": 150.0, "honey_order_rate": 30.371297455152273, "bad_order_rate": 15.686274509803921, "late_delivery_rate": 30.079265748852734, "late_pickup_rate": 13.600333750521484, "avg_delivery_minutes": 35.17879293561394, "avg_courier_delivery_min": 32.89059936031151}, {"period": "2026-03", "delivered_orders": 2797.0, "active_stores": 154.0, "honey_order_rate": 50.26814444047193, "bad_order_rate": 7.293528780836612, "late_delivery_rate": 20.414730067929927, "late_pickup_rate": 13.264211655345012, "avg_delivery_minutes": 25.204385651293045, "avg_courier_delivery_min": 23.122655225837203}, {"period": "2026-04", "delivered_orders": 2941.0, "active_stores": 150.0, "honey_order_rate": 41.55049302958177, "bad_order_rate": 9.792587555253315, "late_delivery_rate": 22.713362801768106, "late_pickup_rate": 12.478748724923495, "avg_delivery_minutes": 26.934438399637322, "avg_courier_delivery_min": 24.849540972458332}, {"period": "2026-05", "delivered_orders": 1457.0, "active_stores": 147.0, "honey_order_rate": 44.40631434454359, "bad_order_rate": 10.775566231983527, "late_delivery_rate": 25.120109814687712, "late_pickup_rate": 13.383665065202472, "avg_delivery_minutes": 26.92430793868681, "avg_courier_delivery_min": 24.889830702356438}], "replacement_adjustment": [{"period": "2025-12", "adjustment_rate": 19.74, "replacement_rate": 27.21}, {"period": "2026-01", "adjustment_rate": 15.52, "replacement_rate": 18.1}, {"period": "2026-02", "adjustment_rate": 13.39, "replacement_rate": 24.29}, {"period": "2026-03", "adjustment_rate": 13.91, "replacement_rate": 22.27}, {"period": "2026-04", "adjustment_rate": 14.5, "replacement_rate": 18.95}, {"period": "2026-05", "adjustment_rate": 18.15, "replacement_rate": 17.01}], "failed_orders": [{"period": "2025-12", "total_placed": 607.0, "delivered": 493.0, "failed_total": 114.0, "failed_rate_pct": 18.780889621087315}, {"period": "2026-01", "total_placed": 1455.0, "delivered": 1282.0, "failed_total": 173.0, "failed_rate_pct": 11.890034364261167}, {"period": "2026-02", "total_placed": 2615.0, "delivered": 2397.0, "failed_total": 218.0, "failed_rate_pct": 8.336520076481836}, {"period": "2026-03", "total_placed": 2901.0, "delivered": 2797.0, "failed_total": 104.0, "failed_rate_pct": 3.5849706997587036}, {"period": "2026-04", "total_placed": 3071.0, "delivered": 2941.0, "failed_total": 130.0, "failed_rate_pct": 4.233148811462065}, {"period": "2026-05", "total_placed": 1520.0, "delivered": 1457.0, "failed_total": 63.0, "failed_rate_pct": 4.144736842105263}], "failed_reasons": [{"period": "2025-12", "reason": "did_not_respond", "actor_type": "provider", "cnt": 35.0}, {"period": "2025-12", "reason": "manually_failed_by_cs", "actor_type": "bolt", "cnt": 31.0}, {"period": "2025-12", "reason": "manually_failed_by_cs", "actor_type": "provider", "cnt": 27.0}, {"period": "2025-12", "reason": "cannot_find_courier", "actor_type": "provider", "cnt": 11.0}, {"period": "2025-12", "reason": "manually_failed_by_user", "actor_type": "client", "cnt": 4.0}, {"period": "2025-12", "reason": "manually_failed_by_cs", "actor_type": "courier", "cnt": 3.0}, {"period": "2025-12", "reason": "automatically_failed", "actor_type": "bolt", "cnt": 3.0}, {"period": "2026-01", "reason": "manually_failed_by_cs", "actor_type": "bolt", "cnt": 67.0}, {"period": "2026-01", "reason": "manually_failed_by_cs", "actor_type": "provider", "cnt": 62.0}, {"period": "2026-01", "reason": "cannot_find_courier", "actor_type": "provider", "cnt": 21.0}, {"period": "2026-01", "reason": "did_not_respond", "actor_type": "provider", "cnt": 8.0}, {"period": "2026-01", "reason": "manually_failed_by_cs", "actor_type": "courier", "cnt": 8.0}, {"period": "2026-01", "reason": "automatically_failed", "actor_type": "bolt", "cnt": 5.0}, {"period": "2026-01", "reason": "manually_failed_by_user", "actor_type": "client", "cnt": 2.0}, {"period": "2026-02", "reason": "manually_failed_by_cs", "actor_type": "provider", "cnt": 106.0}, {"period": "2026-02", "reason": "manually_failed_by_cs", "actor_type": "bolt", "cnt": 66.0}, {"period": "2026-02", "reason": "cannot_find_courier", "actor_type": "provider", "cnt": 21.0}, {"period": "2026-02", "reason": "manually_failed_by_user", "actor_type": "client", "cnt": 8.0}, {"period": "2026-02", "reason": "did_not_respond", "actor_type": "provider", "cnt": 7.0}, {"period": "2026-02", "reason": "manually_failed_by_cs", "actor_type": "courier", "cnt": 7.0}, {"period": "2026-02", "reason": "automatically_failed", "actor_type": "bolt", "cnt": 3.0}, {"period": "2026-03", "reason": "manually_failed_by_cs", "actor_type": "provider", "cnt": 80.0}, {"period": "2026-03", "reason": "manually_failed_by_cs", "actor_type": "bolt", "cnt": 8.0}, {"period": "2026-03", "reason": "manually_failed_by_user", "actor_type": "client", "cnt": 7.0}, {"period": "2026-03", "reason": "did_not_respond", "actor_type": "provider", "cnt": 5.0}, {"period": "2026-03", "reason": "manually_failed_by_cs", "actor_type": "courier", "cnt": 4.0}, {"period": "2026-04", "reason": "manually_failed_by_cs", "actor_type": "provider", "cnt": 75.0}, {"period": "2026-04", "reason": "manually_failed_by_cs", "actor_type": "bolt", "cnt": 18.0}, {"period": "2026-04", "reason": "did_not_respond", "actor_type": "provider", "cnt": 16.0}, {"period": "2026-04", "reason": "manually_failed_by_user", "actor_type": "client", "cnt": 7.0}, {"period": "2026-04", "reason": "cannot_find_courier", "actor_type": "provider", "cnt": 6.0}, {"period": "2026-04", "reason": "manually_failed_by_cs", "actor_type": "courier", "cnt": 5.0}, {"period": "2026-04", "reason": "automatically_failed", "actor_type": "bolt", "cnt": 3.0}, {"period": "2026-05", "reason": "manually_failed_by_cs", "actor_type": "provider", "cnt": 31.0}, {"period": "2026-05", "reason": "did_not_respond", "actor_type": "provider", "cnt": 12.0}, {"period": "2026-05", "reason": "manually_failed_by_cs", "actor_type": "bolt", "cnt": 12.0}, {"period": "2026-05", "reason": "manually_failed_by_user", "actor_type": "client", "cnt": 4.0}, {"period": "2026-05", "reason": "manually_failed_by_cs", "actor_type": "courier", "cnt": 2.0}, {"period": "2026-05", "reason": "automatically_failed", "actor_type": "bolt", "cnt": 1.0}], "campaigns": [{"period": "2025-12", "campaigns_discount_eur": 172.7613930667867, "bolt_spend_eur": 38.157300000000006, "merchant_spend_eur": 0.0, "campaign_orders": 245.0}, {"period": "2026-01", "campaigns_discount_eur": 375.4816809175536, "bolt_spend_eur": 68.66270000000002, "merchant_spend_eur": 0.0, "campaign_orders": 484.0}, {"period": "2026-02", "campaigns_discount_eur": 808.7005960377574, "bolt_spend_eur": 428.1477999999999, "merchant_spend_eur": 0.0, "campaign_orders": 1025.0}, {"period": "2026-03", "campaigns_discount_eur": 1546.475178933004, "bolt_spend_eur": 1149.8892999999994, "merchant_spend_eur": 0.0, "campaign_orders": 1818.0}, {"period": "2026-04", "campaigns_discount_eur": 1018.0462440978299, "bolt_spend_eur": 628.3422000000004, "merchant_spend_eur": 0.0, "campaign_orders": 1540.0}, {"period": "2026-05", "campaigns_discount_eur": 660.7190461929567, "bolt_spend_eur": 373.5368, "merchant_spend_eur": 0.0, "campaign_orders": 859.0}], "acceptance_availability": [{"period": "2025-12", "acceptance_rate": 94.3, "availability_rate": 68.8, "avg_rating": 4.778}, {"period": "2026-01", "acceptance_rate": 99.2, "availability_rate": 86.9, "avg_rating": 4.838}, {"period": "2026-02", "acceptance_rate": 99.5, "availability_rate": 92.2, "avg_rating": 4.88}, {"period": "2026-03", "acceptance_rate": 99.7, "availability_rate": 96.5, "avg_rating": 4.896}, {"period": "2026-04", "acceptance_rate": 99.2, "availability_rate": 96.2, "avg_rating": 4.891}, {"period": "2026-05", "acceptance_rate": 98.9, "availability_rate": 96.9, "avg_rating": 4.927}]}, "weekly": {"financial": [{"period": "2026-04-13", "orders": 682.0, "merchant_price_eur": 5365.389658993489, "merchant_price_per_order": 7.8671402624537965, "gmv_eur": 6308.44292196049, "aov_eur": 9.249916307859955, "users_activated": 16.0, "active_users": 493.0, "refund_rate_pct": 0.04470430945163858}, {"period": "2026-04-20", "orders": 728.0, "merchant_price_eur": 5816.199174351484, "merchant_price_per_order": 7.989284580153137, "gmv_eur": 6781.6666419300245, "aov_eur": 9.315476156497287, "users_activated": 20.0, "active_users": 523.0, "refund_rate_pct": 0.03507586375027774}, {"period": "2026-04-27", "orders": 768.0, "merchant_price_eur": 6328.358918681253, "merchant_price_per_order": 8.240050675366215, "gmv_eur": 7332.665240015606, "aov_eur": 9.547741197936988, "users_activated": 16.0, "active_users": 519.0, "refund_rate_pct": 0.1228761457922403}, {"period": "2026-05-04", "orders": 788.0, "merchant_price_eur": 6656.794157684528, "merchant_price_per_order": 8.44770832193468, "gmv_eur": 7741.260761999129, "aov_eur": 9.823934977156254, "users_activated": 10.0, "active_users": 566.0, "refund_rate_pct": 0.04005365964617614}], "operational": [{"period": "2026-04-13", "delivered_orders": 682.0, "active_stores": 130.0, "honey_order_rate": 39.882697947214076, "bad_order_rate": 9.824046920821115, "late_delivery_rate": 22.87390029325513, "late_pickup_rate": 11.29032258064516, "avg_delivery_minutes": 27.377565982404672, "avg_courier_delivery_min": 25.347091886608016}, {"period": "2026-04-20", "delivered_orders": 728.0, "active_stores": 130.0, "honey_order_rate": 39.56043956043956, "bad_order_rate": 12.5, "late_delivery_rate": 24.313186813186814, "late_pickup_rate": 12.5, "avg_delivery_minutes": 28.21179029304032, "avg_courier_delivery_min": 26.05519688644688}, {"period": "2026-04-27", "delivered_orders": 768.0, "active_stores": 136.0, "honey_order_rate": 48.95833333333333, "bad_order_rate": 9.244791666666668, "late_delivery_rate": 20.963541666666664, "late_pickup_rate": 12.760416666666666, "avg_delivery_minutes": 24.791644965277772, "avg_courier_delivery_min": 22.776258680555554}, {"period": "2026-05-04", "delivered_orders": 788.0, "active_stores": 134.0, "honey_order_rate": 43.90862944162436, "bad_order_rate": 10.65989847715736, "late_delivery_rate": 25.380710659898476, "late_pickup_rate": 13.705583756345177, "avg_delivery_minutes": 27.40461082910318, "avg_courier_delivery_min": 25.41275380710659}], "replacement_adjustment": [{"period": "2026-04-13", "adjustment_rate": 13.2, "replacement_rate": 15.96}, {"period": "2026-04-20", "adjustment_rate": 11.4, "replacement_rate": 15.91}, {"period": "2026-04-27", "adjustment_rate": 15.08, "replacement_rate": 15.0}, {"period": "2026-05-04", "adjustment_rate": 18.59, "replacement_rate": 16.0}], "failed_orders": [{"period": "2026-04-13", "total_placed": 715.0, "delivered": 682.0, "failed_total": 33.0, "failed_rate_pct": 4.615384615384616}, {"period": "2026-04-20", "total_placed": 782.0, "delivered": 728.0, "failed_total": 54.0, "failed_rate_pct": 6.905370843989769}, {"period": "2026-04-27", "total_placed": 799.0, "delivered": 768.0, "failed_total": 31.0, "failed_rate_pct": 3.879849812265332}, {"period": "2026-05-04", "total_placed": 817.0, "delivered": 788.0, "failed_total": 29.0, "failed_rate_pct": 3.549571603427173}], "failed_reasons": [{"period": "2026-04-13", "reason": "manually_failed_by_cs", "actor_type": "provider", "cnt": 23.0}, {"period": "2026-04-13", "reason": "manually_failed_by_cs", "actor_type": "bolt", "cnt": 3.0}, {"period": "2026-04-13", "reason": "did_not_respond", "actor_type": "provider", "cnt": 3.0}, {"period": "2026-04-13", "reason": "manually_failed_by_user", "actor_type": "client", "cnt": 2.0}, {"period": "2026-04-13", "reason": "cannot_find_courier", "actor_type": "provider", "cnt": 1.0}, {"period": "2026-04-13", "reason": "manually_failed_by_cs", "actor_type": "courier", "cnt": 1.0}, {"period": "2026-04-20", "reason": "manually_failed_by_cs", "actor_type": "provider", "cnt": 24.0}, {"period": "2026-04-20", "reason": "did_not_respond", "actor_type": "provider", "cnt": 10.0}, {"period": "2026-04-20", "reason": "manually_failed_by_cs", "actor_type": "bolt", "cnt": 8.0}, {"period": "2026-04-20", "reason": "manually_failed_by_user", "actor_type": "client", "cnt": 4.0}, {"period": "2026-04-20", "reason": "cannot_find_courier", "actor_type": "provider", "cnt": 4.0}, {"period": "2026-04-20", "reason": "manually_failed_by_cs", "actor_type": "courier", "cnt": 2.0}, {"period": "2026-04-20", "reason": "automatically_failed", "actor_type": "bolt", "cnt": 2.0}, {"period": "2026-04-27", "reason": "manually_failed_by_cs", "actor_type": "provider", "cnt": 20.0}, {"period": "2026-04-27", "reason": "manually_failed_by_cs", "actor_type": "bolt", "cnt": 5.0}, {"period": "2026-04-27", "reason": "did_not_respond", "actor_type": "provider", "cnt": 3.0}, {"period": "2026-04-27", "reason": "manually_failed_by_user", "actor_type": "client", "cnt": 2.0}, {"period": "2026-04-27", "reason": "manually_failed_by_cs", "actor_type": "courier", "cnt": 1.0}, {"period": "2026-05-04", "reason": "did_not_respond", "actor_type": "provider", "cnt": 10.0}, {"period": "2026-05-04", "reason": "manually_failed_by_cs", "actor_type": "provider", "cnt": 8.0}, {"period": "2026-05-04", "reason": "manually_failed_by_cs", "actor_type": "bolt", "cnt": 6.0}, {"period": "2026-05-04", "reason": "manually_failed_by_user", "actor_type": "client", "cnt": 3.0}, {"period": "2026-05-04", "reason": "automatically_failed", "actor_type": "bolt", "cnt": 1.0}, {"period": "2026-05-04", "reason": "manually_failed_by_cs", "actor_type": "courier", "cnt": 1.0}], "campaigns": [{"period": "2026-04-13", "campaigns_discount_eur": 194.58761940184922, "bolt_spend_eur": 121.6476, "merchant_spend_eur": 0.0, "campaign_orders": 337.0}, {"period": "2026-04-20", "campaigns_discount_eur": 247.0919823704753, "bolt_spend_eur": 152.4147, "merchant_spend_eur": 0.0, "campaign_orders": 370.0}, {"period": "2026-04-27", "campaigns_discount_eur": 293.2578091833857, "bolt_spend_eur": 186.60660000000001, "merchant_spend_eur": 0.0, "campaign_orders": 460.0}, {"period": "2026-05-04", "campaigns_discount_eur": 395.66926068032626, "bolt_spend_eur": 210.9279, "merchant_spend_eur": 0.0, "campaign_orders": 472.0}], "acceptance_availability": [{"period": "2026-04-13", "acceptance_rate": 99.4, "availability_rate": 96.7, "avg_rating": 4.851}, {"period": "2026-04-20", "acceptance_rate": 98.3, "availability_rate": 95.8, "avg_rating": 4.913}, {"period": "2026-04-27", "acceptance_rate": 99.5, "availability_rate": 96.1, "avg_rating": 4.907}, {"period": "2026-05-04", "acceptance_rate": 98.5, "availability_rate": 96.9, "avg_rating": 4.906}]}, "acceptance_current": [{"acceptance_rate": 100.0, "availability_rate": 96.8, "avg_rating": 4.988}], "top_stores": [{"provider_name": "Hop Hey MAX Печерська площа", "city_name": "Kyiv", "orders": 117.0, "merchant_price_eur": 1004.8085065478974}, {"provider_name": "Hop Hey вул. Митрополита Василя Липківського", "city_name": "Kyiv", "orders": 72.0, "merchant_price_eur": 714.3608163519764}, {"provider_name": "Hop Hey просп.Олександра Поля, 11", "city_name": "Dnipro", "orders": 82.0, "merchant_price_eur": 672.8693855368059}, {"provider_name": "Hop Hey просп. Науки, 8-а", "city_name": "Dnipro", "orders": 72.0, "merchant_price_eur": 633.4996033743719}, {"provider_name": "Hop Hey вул. Васильківська", "city_name": "Kyiv", "orders": 57.0, "merchant_price_eur": 496.74080353295903}, {"provider_name": "Hop Hey просп. Берестейський", "city_name": "Kyiv", "orders": 44.0, "merchant_price_eur": 478.3418471002535}, {"provider_name": "Hop Hey просп.Героїв, 2", "city_name": "Dnipro", "orders": 54.0, "merchant_price_eur": 463.39492307403935}, {"provider_name": "Hop Hey вул. Юлії Здановської", "city_name": "Kyiv", "orders": 56.0, "merchant_price_eur": 461.85704422625065}, {"provider_name": "Hop Hey Max Коцюбинського", "city_name": "Dnipro", "orders": 45.0, "merchant_price_eur": 451.7040687051006}, {"provider_name": "Hop Hey просп.Слобожанський, 74-а", "city_name": "Dnipro", "orders": 45.0, "merchant_price_eur": 365.555280942608}, {"provider_name": "Hop Hey просп.Олександра Поля, 92/62", "city_name": "Dnipro", "orders": 64.0, "merchant_price_eur": 364.5841058257327}, {"provider_name": "Hop hey вул. Михайла Драгоманова", "city_name": "Kyiv", "orders": 47.0, "merchant_price_eur": 359.65985496510837}, {"provider_name": "Hop hey просп. Василя Порика", "city_name": "Kyiv", "orders": 42.0, "merchant_price_eur": 352.4526976671829}, {"provider_name": "Hop Hey просп.Науки, 112/3", "city_name": "Dnipro", "orders": 38.0, "merchant_price_eur": 350.9201081815618}, {"provider_name": "Hop Hey вул. Олеся Гончара", "city_name": "Kyiv", "orders": 34.0, "merchant_price_eur": 346.56002763428035}]};
+
+// ─── Helpers ───
+const n = (v, d=1) => v == null ? '—' : Number(v).toFixed(d);
+const eur = (v) => v == null ? '—' : '€' + Number(v).toLocaleString('uk-UA', {minimumFractionDigits:0, maximumFractionDigits:0});
+const pct = (v) => v == null ? '—' : n(v,1) + '%';
+const fmt = (v) => v == null ? '—' : Number(v).toLocaleString('uk-UA', {maximumFractionDigits:0});
+const fmtDec = (v, d=2) => v == null ? '—' : Number(v).toLocaleString('uk-UA', {minimumFractionDigits:d, maximumFractionDigits:d});
+
+function shortMonth(period) {
+  const map = {'01':'Січ','02':'Лют','03':'Бер','04':'Кві','05':'Тра','06':'Чер','07':'Лип','08':'Сер','09':'Вер','10':'Жов','11':'Лис','12':'Гру'};
+  const [y,m] = period.split('-');
+  return (map[m]||m) + ' ' + y.slice(2);
+}
+
+function shortWeek(period) {
+  const d = new Date(period + 'T00:00:00');
+  const day = d.getDate().toString().padStart(2,'0');
+  const mon = (d.getMonth()+1).toString().padStart(2,'0');
+  return day + '.' + mon;
+}
+
+function changeBadge(curr, prev, inverse=false) {
+  if (prev == null || curr == null) return '';
+  const diff = curr - prev;
+  const pctChange = prev !== 0 ? (diff / Math.abs(prev) * 100) : 0;
+  const isGood = inverse ? diff < 0 : diff > 0;
+  const cls = Math.abs(diff) < 0.5 ? 'badge-b' : isGood ? 'badge-g' : 'badge-r';
+  const arrow = diff > 0 ? '▲' : diff < 0 ? '▼' : '≈';
+  return `<span class="badge ${cls}">${arrow} ${Math.abs(pctChange).toFixed(1)}%</span>`;
+}
+
+function ppBadge(curr, prev, inverse=false) {
+  if (prev == null || curr == null) return '';
+  const diff = curr - prev;
+  const isGood = inverse ? diff < 0 : diff > 0;
+  const cls = Math.abs(diff) < 0.3 ? 'badge-b' : isGood ? 'badge-g' : 'badge-r';
+  const sign = diff > 0 ? '+' : '';
+  return `<span class="badge ${cls}">${sign}${diff.toFixed(1)}pp</span>`;
+}
+
+const defOpts = {
+  responsive:true, maintainAspectRatio:false,
+  plugins:{legend:{labels:{color:'#6b7280',font:{size:11}}},tooltip:{backgroundColor:'#fff',borderColor:'#e5e7eb',borderWidth:1,titleColor:'#1f2937',bodyColor:'#6b7280'}},
+  scales:{x:{ticks:{color:'#9ca3af',font:{size:10}},grid:{color:'rgba(0,0,0,0.04)'}},y:{ticks:{color:'#9ca3af',font:{size:10}},grid:{color:'rgba(0,0,0,0.06)'}}}
+};
+
+function dualY(l,r){return{...defOpts,scales:{...defOpts.scales,y:{...defOpts.scales.y,title:{display:true,text:l,color:'#9ca3af'}},y1:{...defOpts.scales.y,position:'right',title:{display:true,text:r,color:'#9ca3af'},grid:{drawOnChartArea:false}}}}}
+
+function mergeData(finArr, opsArr, replArr, failArr, aaArr) {
+  const map = {};
+  const addToMap = (arr, prefix) => {
+    if (!arr) return;
+    for (const row of arr) {
+      const p = row.period;
+      if (!map[p]) map[p] = {period: p};
+      for (const [k,v] of Object.entries(row)) {
+        if (k !== 'period') map[p][prefix ? prefix+'_'+k : k] = v;
+      }
+    }
+  };
+  addToMap(finArr, 'fin');
+  addToMap(opsArr, 'ops');
+  addToMap(replArr, 'repl');
+  addToMap(failArr, 'fail');
+  addToMap(aaArr, 'aa');
+  return Object.values(map).sort((a,b) => a.period.localeCompare(b.period));
+}
+
+function buildFailReasonsMap(reasons) {
+  const map = {};
+  for (const r of reasons) {
+    if (!map[r.period]) map[r.period] = {};
+    const key = r.reason + '|' + r.actor_type;
+    map[r.period][key] = (map[r.period][key] || 0) + Number(r.cnt);
+  }
+  return map;
+}
+
+function reasonLabel(reason, actor) {
+  const labels = {
+    'manually_failed_by_cs|provider': 'CS — проблема закладу',
+    'manually_failed_by_cs|bolt': 'CS — проблема Bolt',
+    'manually_failed_by_cs|courier': 'CS — проблема кур\'єра',
+    'did_not_respond|provider': 'Заклад не відповів',
+    'cannot_find_courier|provider': 'Не знайдено кур\'єра',
+    'manually_failed_by_user|client': 'Скасування клієнтом',
+    'automatically_failed|bolt': 'Автоматичне скасування',
+  };
+  return labels[reason+'|'+actor] || reason + ' (' + actor + ')';
+}
+
+const REASON_COLORS = {
+  'manually_failed_by_cs|provider': '#dc2626',
+  'manually_failed_by_cs|bolt': '#ea580c',
+  'manually_failed_by_cs|courier': '#ca8a04',
+  'did_not_respond|provider': '#7c3aed',
+  'cannot_find_courier|provider': '#2563eb',
+  'manually_failed_by_user|client': '#6b7280',
+  'automatically_failed|bolt': '#0891b2',
+};
+
+// ─── Tab switching ───
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ─── Render ───
+const D = REPORT_DATA;
+const mData = mergeData(D.monthly.financial, D.monthly.operational, D.monthly.replacement_adjustment, D.monthly.failed_orders, D.monthly.acceptance_availability);
+const wData = mergeData(D.weekly.financial, D.weekly.operational, D.weekly.replacement_adjustment, D.weekly.failed_orders, D.weekly.acceptance_availability);
+
+// Header
+const periods = mData.map(d => d.period);
+const firstMonth = shortMonth(periods[0]);
+const lastMonth = shortMonth(periods[periods.length-1]);
+document.getElementById('reportSubtitle').textContent = `Bolt Food UA · ${firstMonth} – ${lastMonth} · Валюта: EUR (€) · Бренд: ${D.partner_name}`;
+document.getElementById('reportMeta').innerHTML = `Оновлено: ${D.generated_at}<br>Дані: з ${D.data_start}<br>Тижневі: ${D.weekly_start} — ${D.weekly_end}`;
+
+function renderKPICards(containerId, data, labelFn) {
+  const last = data[data.length - 1];
+  const prev = data.length > 1 ? data[data.length - 2] : null;
+  const container = document.getElementById(containerId);
+  if (!last) { container.innerHTML = '<div class="card kpi">Немає даних</div>'; return; }
+
+  const kpis = [
+    {label:'Продажі партнера', sub:'€', value: eur(last.fin_merchant_price_eur), change: prev ? changeBadge(last.fin_merchant_price_eur, prev.fin_merchant_price_eur) : ''},
+    {label:'Доставлені замовлення', sub:'', value: fmt(last.fin_orders), change: prev ? changeBadge(last.fin_orders, prev.fin_orders) : ''},
+    {label:'Середній чек', sub:'€', value: '€'+n(last.fin_merchant_price_per_order,2), change: prev ? changeBadge(last.fin_merchant_price_per_order, prev.fin_merchant_price_per_order) : ''},
+    {label:'Частка невдалих', sub:'замовлень', value: pct(last.fail_failed_rate_pct), change: prev ? ppBadge(last.fail_failed_rate_pct, prev.fail_failed_rate_pct, true) : '', color: last.fail_failed_rate_pct < 5 ? 'var(--green)' : last.fail_failed_rate_pct < 10 ? 'var(--yellow)' : 'var(--red)'},
+    {label:'Якісні замовлення', sub:'Honey', value: pct(last.ops_honey_order_rate), change: prev ? ppBadge(last.ops_honey_order_rate, prev.ops_honey_order_rate) : '', color: last.ops_honey_order_rate > 40 ? 'var(--green)' : ''},
+    {label:'Активні користувачі', sub:'', value: fmt(last.fin_active_users), change: prev ? changeBadge(last.fin_active_users, prev.fin_active_users) : ''},
+  ];
+
+  container.innerHTML = kpis.map(k =>
+    `<div class="card kpi">
+      <div class="kpi-label">${k.label}<span class="me">${k.sub}</span></div>
+      <div class="kpi-value" ${k.color ? `style="color:${k.color}"` : ''}>${k.value}</div>
+      <div class="kpi-sub">${k.change}</div>
+    </div>`
+  ).join('');
+}
+
+function renderCharts(prefix, data, labelFn) {
+  const labels = data.map(d => labelFn(d.period));
+
+  new Chart(document.getElementById(prefix+'-cGMV'), {type:'bar', data:{labels, datasets:[{label:'Продажі партнера (€)', data:data.map(d=>d.fin_merchant_price_eur), backgroundColor:'rgba(52,209,134,0.5)', borderRadius:4}]}, options:defOpts});
+
+  new Chart(document.getElementById(prefix+'-cOrders'), {type:'line', data:{labels, datasets:[
+    {label:'Доставлені', data:data.map(d=>d.fin_orders), borderColor:'#34D186', backgroundColor:'rgba(52,209,134,0.08)', fill:true, tension:.3},
+    {label:'Розміщені', data:data.map(d=>d.fail_total_placed), borderColor:'#7c3aed', borderDash:[5,3], tension:.3, fill:false}
+  ]}, options:defOpts});
+
+  new Chart(document.getElementById(prefix+'-cAOV'), {type:'line', data:{labels, datasets:[{label:'Середній чек (€)', data:data.map(d=>d.fin_merchant_price_per_order), borderColor:'#0891b2', tension:.3, fill:false, pointRadius:5}]}, options:defOpts});
+
+  new Chart(document.getElementById(prefix+'-cUsers'), {type:'bar', data:{labels, datasets:[
+    {label:'Нові користувачі', data:data.map(d=>d.fin_users_activated), backgroundColor:'rgba(52,209,134,0.5)', borderRadius:3, yAxisID:'y'},
+    {label:'Активні користувачі', data:data.map(d=>d.fin_active_users), borderColor:'#2563eb', type:'line', tension:.3, yAxisID:'y1', fill:false}
+  ]}, options:dualY('Нові користувачі','Активні користувачі')});
+
+  new Chart(document.getElementById(prefix+'-cFail'), {type:'line', data:{labels, datasets:[
+    {label:'Невдалі замовлення %', data:data.map(d=>d.fail_failed_rate_pct), borderColor:'#dc2626', tension:.3, fill:false},
+    {label:'Проблемні замовлення %', data:data.map(d=>d.ops_bad_order_rate), borderColor:'#ea580c', tension:.3, fill:false}
+  ]}, options:defOpts});
+
+  new Chart(document.getElementById(prefix+'-cHoney'), {type:'line', data:{labels, datasets:[{label:'Якісні замовлення %', data:data.map(d=>d.ops_honey_order_rate), borderColor:'#34D186', tension:.3, fill:true, backgroundColor:'rgba(52,209,134,0.08)'}]}, options:defOpts});
+
+  new Chart(document.getElementById(prefix+'-cDuration'), {type:'bar', data:{labels, datasets:[
+    {label:'Час доставки (хв)', data:data.map(d=>d.ops_avg_delivery_minutes), backgroundColor:'rgba(37,99,235,0.4)', borderRadius:3, yAxisID:'y'},
+    {label:'Час кур\'єра (хв)', data:data.map(d=>d.ops_avg_courier_delivery_min), borderColor:'#ea580c', type:'line', tension:.3, yAxisID:'y1', fill:false}
+  ]}, options:dualY('Час доставки (хв)','Час кур\'єра (хв)')});
+
+  new Chart(document.getElementById(prefix+'-cLate'), {type:'line', data:{labels, datasets:[
+    {label:'Запізнення доставки %', data:data.map(d=>d.ops_late_delivery_rate), borderColor:'#dc2626', tension:.3, fill:false},
+    {label:'Запізнення збирання %', data:data.map(d=>d.ops_late_pickup_rate), borderColor:'#ea580c', tension:.3, fill:false}
+  ]}, options:defOpts});
+
+  new Chart(document.getElementById(prefix+'-cAdjust'), {type:'line', data:{labels, datasets:[{label:'Коригування %', data:data.map(d=>d.repl_adjustment_rate), borderColor:'#d97706', tension:.3, pointRadius:5, pointBackgroundColor:'#d97706'}]}, options:defOpts});
+  new Chart(document.getElementById(prefix+'-cReplace'), {type:'line', data:{labels, datasets:[{label:'Заміна товарів %', data:data.map(d=>d.repl_replacement_rate), borderColor:'#d97706', tension:.3, pointRadius:5, pointBackgroundColor:'#d97706'}]}, options:defOpts});
+
+  new Chart(document.getElementById(prefix+'-cMerchants'), {type:'bar', data:{labels, datasets:[
+    {label:'Активні заклади', data:data.map(d=>d.ops_active_stores), backgroundColor:'rgba(52,209,134,0.4)', borderRadius:3, yAxisID:'y'},
+    {label:'Доступність %', data:data.map(d=>d.aa_availability_rate), borderColor:'#34D186', type:'line', tension:.3, yAxisID:'y1', fill:false}
+  ]}, options:dualY('Заклади','Доступність (%)')});
+
+  const ratings = data.map(d=>d.aa_avg_rating).filter(v=>v!=null);
+  const minR = ratings.length ? Math.floor(Math.min(...ratings)*10)/10 - 0.1 : 4.5;
+  new Chart(document.getElementById(prefix+'-cRating'), {type:'line', data:{labels, datasets:[{label:'Рейтинг', data:data.map(d=>d.aa_avg_rating), borderColor:'#eab308', backgroundColor:'rgba(234,179,8,0.06)', fill:true, tension:.3, pointRadius:5}]}, options:{...defOpts, scales:{...defOpts.scales, y:{...defOpts.scales.y, min:Math.max(minR,4.0), max:5.0}}}});
+
+  // Failed orders by reason (stacked bar)
+  const reasonsMap = prefix === 'm' ? buildFailReasonsMap(D.monthly.failed_reasons) : buildFailReasonsMap(D.weekly.failed_reasons);
+  const allReasons = new Set();
+  for (const pm of Object.values(reasonsMap)) for (const k of Object.keys(pm)) allReasons.add(k);
+  const reasonsList = [...allReasons].sort((a,b) => {
+    const sumA = data.reduce((s,d) => s + (reasonsMap[d.period]?.[a]||0), 0);
+    const sumB = data.reduce((s,d) => s + (reasonsMap[d.period]?.[b]||0), 0);
+    return sumB - sumA;
+  });
+  new Chart(document.getElementById(prefix+'-cFailReasons'), {type:'bar', data:{labels, datasets: reasonsList.map(rk => {
+    const [reason, actor] = rk.split('|');
+    return {label: reasonLabel(reason, actor), data: data.map(d => reasonsMap[d.period]?.[rk] || 0), backgroundColor: REASON_COLORS[rk] || '#9ca3af', borderRadius:2};
+  })}, options:{...defOpts, scales:{...defOpts.scales, x:{...defOpts.scales.x, stacked:true}, y:{...defOpts.scales.y, stacked:true}}}});
+
+  // Failed Rate trend
+  new Chart(document.getElementById(prefix+'-cFailRate'), {type:'line', data:{labels, datasets:[{label:'Частка невдалих %', data:data.map(d=>d.fail_failed_rate_pct), borderColor:'#dc2626', backgroundColor:'rgba(220,38,38,0.05)', fill:true, tension:.3, pointRadius:5}]}, options:defOpts});
+
+  // Campaigns
+  const campData = prefix === 'm' ? D.monthly.campaigns : D.weekly.campaigns;
+  const campLabels = campData.map(d => labelFn(d.period));
+  new Chart(document.getElementById(prefix+'-cInvest'), {type:'bar', data:{labels:campLabels, datasets:[
+    {label:'Bolt (€)', data:campData.map(d=>d.bolt_spend_eur), backgroundColor:'rgba(37,99,235,0.5)', borderRadius:4},
+    {label:'Партнер (€)', data:campData.map(d=>d.merchant_spend_eur), backgroundColor:'rgba(234,179,8,0.5)', borderRadius:4}
+  ]}, options:{...defOpts, scales:{...defOpts.scales, x:{...defOpts.scales.x, stacked:true}, y:{...defOpts.scales.y, stacked:true}}}});
+
+  const merchPriceByPeriod = {};
+  for (const d of data) merchPriceByPeriod[d.period] = d.fin_merchant_price_eur;
+  new Chart(document.getElementById(prefix+'-cCampOrders'), {type:'bar', data:{labels:campLabels, datasets:[
+    {label:'Кампанійні замовлення', data:campData.map(d=>d.campaign_orders), backgroundColor:'rgba(234,179,8,0.4)', borderRadius:3, yAxisID:'y'},
+    {label:'Знижка % від продажів', data:campData.map(d=> {
+      const mp = merchPriceByPeriod[d.period];
+      return mp ? (d.campaigns_discount_eur / mp * 100) : 0;
+    }), borderColor:'#dc2626', type:'line', tension:.3, yAxisID:'y1', fill:false}
+  ]}, options:dualY('Кампанійні замовлення','Знижка % від продажів')});
+}
+
+// ─── Monthly data rendering ───
+renderKPICards('m-kpi-cards', mData, shortMonth);
+renderCharts('m', mData, shortMonth);
+
+// Monthly sales table
+{
+  const last = mData[mData.length-1];
+  const prev = mData.length > 1 ? mData[mData.length-2] : null;
+  const tbl = document.getElementById('m-sales-table');
+  let html = '<thead><tr><th>Метрика</th><th>Опис</th>';
+  for (const d of mData) html += `<th>${shortMonth(d.period)}</th>`;
+  html += '</tr></thead><tbody>';
+  const rows = [
+    {name:'Продажі партнера (€)', desc:'', key:'fin_merchant_price_eur', fmt:eur},
+    {name:'Доставлені замовлення', desc:'', key:'fin_orders', fmt:fmt},
+    {name:'Розміщені замовлення', desc:'', key:'fail_total_placed', fmt:fmt},
+    {name:'Середній чек (€)', desc:'', key:'fin_merchant_price_per_order', fmt:v=>'€'+n(v,2)},
+    {name:'Нові користувачі', desc:'перше замовлення', key:'fin_users_activated', fmt:fmt},
+    {name:'Активні користувачі', desc:'', key:'fin_active_users', fmt:fmt},
+  ];
+  for (const r of rows) {
+    html += `<tr><td>${r.name}</td><td class="me">${r.desc}</td>`;
+    for (const d of mData) html += `<td>${r.fmt(d[r.key])}</td>`;
+    html += '</tr>';
+  }
+  html += '</tbody>';
+  tbl.innerHTML = html;
+}
+
+// Monthly ops table
+{
+  const tbl = document.getElementById('m-ops-table');
+  let html = '<thead><tr><th>Метрика</th><th>Опис</th>';
+  for (const d of mData) html += `<th>${shortMonth(d.period)}</th>`;
+  html += '</tr></thead><tbody>';
+  const rows = [
+    {name:'Частка невдалих', desc:'', key:'fail_failed_rate_pct', fmt:pct, inv:true},
+    {name:'Частка проблемних', desc:'', key:'ops_bad_order_rate', fmt:pct, inv:true},
+    {name:'Якісні замовлення', desc:'Honey', key:'ops_honey_order_rate', fmt:pct, inv:false},
+    {name:'Запізнення доставки', desc:'', key:'ops_late_delivery_rate', fmt:pct, inv:true},
+    {name:'Запізнення збирання', desc:'', key:'ops_late_pickup_rate', fmt:pct, inv:true},
+    {name:'Час доставки (хв)', desc:'', key:'ops_avg_delivery_minutes', fmt:v=>n(v,1), inv:true},
+    {name:'Коригування замовлень', desc:'Adjustment', key:'repl_adjustment_rate', fmt:pct, inv:true},
+    {name:'  ↳ Заміна товарів', desc:'Replacement (підмножина)', key:'repl_replacement_rate', fmt:pct, inv:true},
+    {name:'Активні заклади', desc:'', key:'ops_active_stores', fmt:fmt, inv:false},
+    {name:'Доступність', desc:'', key:'aa_availability_rate', fmt:pct, inv:false},
+    {name:'Прийняття замовлень', desc:'', key:'aa_acceptance_rate', fmt:pct, inv:false},
+    {name:'Рейтинг закладів', desc:'', key:'aa_avg_rating', fmt:v=>n(v,3), inv:false},
+    {name:'Повернення коштів', desc:'', key:'fin_refund_rate_pct', fmt:pct, inv:true},
+  ];
+  for (const r of rows) {
+    html += `<tr><td>${r.name}</td><td class="me">${r.desc}</td>`;
+    for (let i=0; i<mData.length; i++) {
+      const val = mData[i][r.key];
+      const prev = i > 0 ? mData[i-1][r.key] : null;
+      let style = '';
+      if (prev != null && val != null) {
+        const diff = val - prev;
+        const good = r.inv ? diff < -0.5 : diff > 0.5;
+        const bad = r.inv ? diff > 0.5 : diff < -0.5;
+        if (good) style = 'color:var(--green)';
+        else if (bad) style = 'color:var(--red)';
+      }
+      html += `<td style="${style}">${r.fmt(val)}</td>`;
+    }
+    html += '</tr>';
+  }
+  html += '</tbody>';
+  tbl.innerHTML = html;
+}
+
+// Monthly failed reasons table
+{
+  const tbl = document.getElementById('m-fail-table');
+  const reasonsMap = buildFailReasonsMap(D.monthly.failed_reasons);
+  const allReasons = new Set();
+  for (const pm of Object.values(reasonsMap)) for (const k of Object.keys(pm)) allReasons.add(k);
+  const sorted = [...allReasons].sort((a,b) => {
+    const sumA = mData.reduce((s,d) => s + (reasonsMap[d.period]?.[a]||0), 0);
+    const sumB = mData.reduce((s,d) => s + (reasonsMap[d.period]?.[b]||0), 0);
+    return sumB - sumA;
+  });
+
+  let html = '<thead><tr><th>Причина</th>';
+  for (const d of mData) html += `<th>${shortMonth(d.period)}</th>`;
+  html += '<th>Всього</th></tr></thead><tbody>';
+  for (const rk of sorted) {
+    const [reason, actor] = rk.split('|');
+    let total = 0;
+    html += `<tr><td style="white-space:nowrap">${reasonLabel(reason, actor)}</td>`;
+    for (const d of mData) {
+      const v = reasonsMap[d.period]?.[rk] || 0;
+      total += v;
+      html += `<td>${v || '—'}</td>`;
+    }
+    html += `<td><strong>${total}</strong></td></tr>`;
+  }
+  // Total row
+  html += '<tr style="font-weight:700;background:#f9fafb"><td>Всього Failed</td>';
+  let grandTotal = 0;
+  for (const d of mData) {
+    const v = d.fail_failed_total || 0;
+    grandTotal += Number(v);
+    html += `<td>${fmt(v)}</td>`;
+  }
+  html += `<td><strong>${fmt(grandTotal)}</strong></td></tr>`;
+  html += '</tbody>';
+  tbl.innerHTML = html;
+}
+
+// Monthly campaigns table
+{
+  const tbl = document.getElementById('m-camp-table');
+  const campData = D.monthly.campaigns;
+  let html = '<thead><tr><th>Показник</th>';
+  for (const d of campData) html += `<th>${shortMonth(d.period)}</th>`;
+  html += '</tr></thead><tbody>';
+  const merchPriceByPeriod = {};
+  for (const d of mData) merchPriceByPeriod[d.period] = d.fin_merchant_price_eur;
+  const ordersPlacedByPeriod = {};
+  for (const d of mData) ordersPlacedByPeriod[d.period] = d.fail_total_placed;
+
+  const rows = [
+    {name:'Загальна знижка (€)', desc:'', fn:d=>eur(d.campaigns_discount_eur)},
+    {name:'— Частка Bolt', desc:'', fn:d=>eur(d.bolt_spend_eur)},
+    {name:'— Частка партнера', desc:'', fn:d=>eur(d.merchant_spend_eur)},
+    {name:'Кампанійні замовлення', desc:'', fn:d=>fmt(d.campaign_orders)},
+    {name:'Кампанійні % від розміщених', desc:'', fn:d=>{
+      const placed = ordersPlacedByPeriod[d.period];
+      return placed ? pct(d.campaign_orders / placed * 100) : '—';
+    }},
+    {name:'Знижка як % від продажів', desc:'', fn:d=>{
+      const mp = merchPriceByPeriod[d.period];
+      return mp ? pct(d.campaigns_discount_eur / mp * 100) : '—';
+    }},
+  ];
+  for (const r of rows) {
+    html += `<tr><td>${r.name}${r.desc ? '<span class="me">'+r.desc+'</span>' : ''}</td>`;
+    for (const d of campData) html += `<td>${r.fn(d)}</td>`;
+    html += '</tr>';
+  }
+  html += '</tbody>';
+  tbl.innerHTML = html;
+}
+
+// Monthly top stores
+{
+  const stores = D.top_stores;
+  if (stores && stores.length) {
+    const maxVal = Math.max(...stores.map(s => Number(s.merchant_price_eur)));
+    const container = document.getElementById('m-top-stores');
+    const cityColors = {};
+    const palette = ['var(--accent)','var(--purple)','var(--blue)','var(--orange)','var(--cyan)','var(--red)'];
+    let ci = 0;
+    container.innerHTML = stores.map(s => {
+      if (!cityColors[s.city_name]) cityColors[s.city_name] = palette[ci++ % palette.length];
+      const pctWidth = (Number(s.merchant_price_eur) / maxVal * 100).toFixed(0);
+      return `<div class="store-row"><span class="store-name">${s.provider_name} · ${s.city_name}</span><div class="bar-bg"><div class="bar-fill" style="width:${pctWidth}%;background:${cityColors[s.city_name]}">${eur(s.merchant_price_eur)} · ${fmt(s.orders)} зам.</div></div></div>`;
+    }).join('');
+  }
+}
+
+// Monthly full KPI table
+{
+  const tbl = document.getElementById('m-kpi-table');
+  let html = '<thead><tr><th>Місяць</th><th>Продажі (€)</th><th>Замовл.</th><th>Сер. чек (€)</th><th>Нові кор.</th><th>Акт. кор.</th><th>Невдалі %</th><th>Проблемні %</th><th>Якісні %</th><th>Запізн. дост. %</th><th>Час (хв)</th><th>Доступн. %</th><th>Рейтинг</th><th>Акт. закл.</th></tr></thead><tbody>';
+  for (let i=0; i<mData.length; i++) {
+    const d = mData[i];
+    const isLast = i === mData.length-1;
+    html += `<tr ${isLast ? 'style="background:#f0fdf4;font-weight:600"' : ''}>`;
+    html += `<td>${isLast ? '<strong>' : ''}${shortMonth(d.period)}${isLast ? '</strong>' : ''}</td>`;
+    html += `<td>${eur(d.fin_merchant_price_eur)}</td>`;
+    html += `<td>${fmt(d.fin_orders)}</td>`;
+    html += `<td>€${n(d.fin_merchant_price_per_order,2)}</td>`;
+    html += `<td>${fmt(d.fin_users_activated)}</td>`;
+    html += `<td>${fmt(d.fin_active_users)}</td>`;
+    html += `<td>${pct(d.fail_failed_rate_pct)}</td>`;
+    html += `<td>${pct(d.ops_bad_order_rate)}</td>`;
+    html += `<td>${pct(d.ops_honey_order_rate)}</td>`;
+    html += `<td>${pct(d.ops_late_delivery_rate)}</td>`;
+    html += `<td>${n(d.ops_avg_delivery_minutes,1)}</td>`;
+    html += `<td>${pct(d.aa_availability_rate)}</td>`;
+    html += `<td>${n(d.aa_avg_rating,3)}</td>`;
+    html += `<td>${fmt(d.ops_active_stores)}</td>`;
+    html += '</tr>';
+  }
+  html += '</tbody>';
+  tbl.innerHTML = html;
+}
+
+// ─── Weekly data rendering ───
+if (wData.length) {
+  document.getElementById('w-kpi-title').textContent = `Ключові показники (${shortWeek(D.weekly_start)} – ${shortWeek(D.weekly_end)})`;
+  renderKPICards('w-kpi-cards', wData, shortWeek);
+  renderCharts('w', wData, shortWeek);
+}
 </script>
 </body>
 </html>
