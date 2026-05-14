@@ -2,7 +2,7 @@
 
 Автоматизовані квартальні бізнес-огляди для партнерів Bolt Food UA.
 
-**Live:** https://mykhailobrynchak-dev.github.io/hophey-qbr-report/
+**Live:** https://mykhailobrynchak-dev.github.io/stores-qbr-reports/
 
 ## Структура
 
