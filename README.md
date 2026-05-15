@@ -4,8 +4,6 @@
 
 **Live:** https://mykhailobrynchak-dev.github.io/stores-qbr-reports/
 
-> CAFE RYNOK — окремий репозиторій: [cafe-rynok-report](https://github.com/mykhailobrynchak-dev/cafe-rynok-report)
-
 ## Структура
 
 | Файл | Призначення |
