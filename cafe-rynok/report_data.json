@@ -76,11 +76,11 @@
       {"period":"2026-04","reason":"manually_failed_by_cs","actor_type":"client","cnt":1}
     ],
     "campaigns": [
-      {"period":"2025-12","campaigns_discount_eur":645.89,"bolt_spend_eur":8.61,"merchant_spend_eur":740.78,"campaign_orders":592},
-      {"period":"2026-01","campaigns_discount_eur":939.99,"bolt_spend_eur":28.16,"merchant_spend_eur":1023.57,"campaign_orders":872},
-      {"period":"2026-02","campaigns_discount_eur":1087.20,"bolt_spend_eur":99.76,"merchant_spend_eur":156.59,"campaign_orders":1124},
-      {"period":"2026-03","campaigns_discount_eur":1036.03,"bolt_spend_eur":836.29,"merchant_spend_eur":691.68,"campaign_orders":1403},
-      {"period":"2026-04","campaigns_discount_eur":618.25,"bolt_spend_eur":398.88,"merchant_spend_eur":663.09,"campaign_orders":945}
+      {"period":"2025-12","campaigns_discount_eur":1293.73,"bolt_spend_eur":552.95,"merchant_spend_eur":740.78,"campaign_orders":592},
+      {"period":"2026-01","campaigns_discount_eur":1791.20,"bolt_spend_eur":767.63,"merchant_spend_eur":1023.57,"campaign_orders":872},
+      {"period":"2026-02","campaigns_discount_eur":1158.11,"bolt_spend_eur":1001.53,"merchant_spend_eur":156.59,"campaign_orders":1124},
+      {"period":"2026-03","campaigns_discount_eur":1657.15,"bolt_spend_eur":965.47,"merchant_spend_eur":691.68,"campaign_orders":1403},
+      {"period":"2026-04","campaigns_discount_eur":1200.81,"bolt_spend_eur":537.72,"merchant_spend_eur":663.09,"campaign_orders":945}
     ],
     "acceptance_availability": [
       {"period":"2025-12","acceptance_rate":97.3,"availability_rate":92.6,"avg_rating":4.743},
@@ -135,10 +135,10 @@
       {"period":"2026-05-04","reason":"manually_failed_by_user","actor_type":"client","cnt":2}
     ],
     "campaigns": [
-      {"period":"2026-04-13","campaigns_discount_eur":77.38,"bolt_spend_eur":48.42,"merchant_spend_eur":21.80,"campaign_orders":133},
-      {"period":"2026-04-20","campaigns_discount_eur":117.96,"bolt_spend_eur":63.46,"merchant_spend_eur":50.72,"campaign_orders":182},
-      {"period":"2026-04-27","campaigns_discount_eur":90.76,"bolt_spend_eur":59.95,"merchant_spend_eur":21.65,"campaign_orders":155},
-      {"period":"2026-05-04","campaigns_discount_eur":83.76,"bolt_spend_eur":51.30,"merchant_spend_eur":21.27,"campaign_orders":149}
+      {"period":"2026-04-13","campaigns_discount_eur":92.0,"bolt_spend_eur":70.20,"merchant_spend_eur":21.80,"campaign_orders":154},
+      {"period":"2026-04-20","campaigns_discount_eur":151.64,"bolt_spend_eur":100.92,"merchant_spend_eur":50.72,"campaign_orders":204},
+      {"period":"2026-04-27","campaigns_discount_eur":109.87,"bolt_spend_eur":88.22,"merchant_spend_eur":21.65,"campaign_orders":162},
+      {"period":"2026-05-04","campaigns_discount_eur":96.25,"bolt_spend_eur":74.98,"merchant_spend_eur":21.27,"campaign_orders":151}
     ],
     "acceptance_availability": [
       {"period":"2026-04-13","acceptance_rate":98.3,"availability_rate":93.7,"avg_rating":5.0},

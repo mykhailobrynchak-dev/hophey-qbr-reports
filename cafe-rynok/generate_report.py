@@ -261,17 +261,11 @@ ORDER BY 1, cnt DESC
 CAMPAIGNS_MONTHLY = f"""
 SELECT
     DATE_FORMAT(f.order_created_date, 'yyyy-MM') AS period,
-    SUM(f.demand_incentives_eur) AS campaigns_discount_eur,
-    SUM(
-        COALESCE(f.bolt_spend_am_spend_campaign, 0)
-        + COALESCE(f.bolt_spend_liquidity_campaign, 0)
-        + COALESCE(f.bolt_spend_marketing_campaign, 0)
-        + COALESCE(f.bolt_spend_user_lifecycle_campaign, 0)
-        + COALESCE(f.bolt_spend_merchant_lifecycle_campaign, 0)
-        + COALESCE(f.bolt_spend_other_campaign, 0)
-    ) AS bolt_spend_eur,
+    SUM(f.total_order_item_discount_eur) AS campaigns_discount_eur,
+    SUM(f.total_order_item_discount_eur)
+        - SUM(f.provider_price_before_discount_eur - f.provider_price_after_discount_eur) AS bolt_spend_eur,
     SUM(f.provider_price_before_discount_eur - f.provider_price_after_discount_eur) AS merchant_spend_eur,
-    COUNT(CASE WHEN f.demand_incentives_eur > 0 THEN 1 END) AS campaign_orders
+    COUNT(CASE WHEN f.total_order_item_discount_eur > 0 THEN 1 END) AS campaign_orders
 FROM ng_delivery_spark.fact_order_delivery f
     JOIN ng_delivery_spark.dim_provider_v2 p ON f.provider_id = p.provider_id
 WHERE p.country_code = 'ua'
