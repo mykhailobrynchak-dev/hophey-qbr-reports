@@ -1,34 +1,24 @@
-# Stores QBR Reports
+# HOP HEY — QBR Report
 
-Автоматизовані квартальні бізнес-огляди для партнерів Bolt Food UA.
+Автоматизований квартальний бізнес-огляд для партнера HOP HEY × Bolt Food UA.
 
-## Звіти
+**Live:** https://mykhailobrynchak-dev.github.io/stores-qbr-reports/
 
-| Партнер | Папка | Live | Оновлення |
-|---------|-------|------|-----------|
-| HOP HEY | `/` (root) | [Відкрити](https://mykhailobrynchak-dev.github.io/stores-qbr-reports/) | Пн 08:00 Київ |
-| CAFE RYNOK | `/cafe-rynok/` | [Відкрити](https://mykhailobrynchak-dev.github.io/stores-qbr-reports/cafe-rynok/) | Пн 07:00 Київ |
+> CAFE RYNOK — окремий репозиторій: [cafe-rynok-report](https://github.com/mykhailobrynchak-dev/cafe-rynok-report)
 
 ## Структура
 
-```
-├── generate_report.py      # HOP HEY: Databricks → index.html
-├── template.html           # HOP HEY: HTML-шаблон
-├── index.html              # HOP HEY: готовий звіт
-├── report_data.json        # HOP HEY: кешовані дані
-├── cafe-rynok/
-│   ├── generate_report.py  # CAFE RYNOK: Databricks → index.html
-│   ├── template.html       # CAFE RYNOK: HTML-шаблон (3 вкладки: Місяці / Тижні / Локації)
-│   ├── index.html          # CAFE RYNOK: готовий звіт
-│   └── report_data.json    # CAFE RYNOK: кешовані дані
-└── .github/workflows/
-    ├── update-report.yml       # HOP HEY workflow
-    └── update-cafe-rynok.yml   # CAFE RYNOK workflow
-```
+| Файл | Призначення |
+|------|-------------|
+| `generate_report.py` | Основний скрипт: Databricks SQL → `index.html` |
+| `template.html` | HTML-шаблон із Chart.js |
+| `build_local.py` | Локальна збірка з `report_data.json` (без Databricks) |
+| `report_data.json` | Кешовані дані |
+| `index.html` | Готовий звіт |
 
 ## Автоматичне оновлення
 
-Обидва звіти оновлюються щопонеділка через GitHub Actions.
+Щопонеділка о 08:00 за Києвом через GitHub Actions.
 
 ## Секрети (GitHub Actions)
 
