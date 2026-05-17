@@ -2,4 +2,4 @@
 
 Bolt Food UA · Автоматично оновлюється щопонеділка.
 
-**Live:** https://mykhailobrynchak-dev.github.io/stores-qbr-reports/
+**Live:** https://mykhailobrynchak-dev.github.io/hophey-qbr-reports/
