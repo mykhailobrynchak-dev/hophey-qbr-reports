@@ -31,6 +31,7 @@ th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.03
 .warn{background:#fff7ed;border-left:3px solid var(--orange)}
 .info{background:#eff6ff;border-left:3px solid var(--blue)}
 .me{color:var(--muted);font-size:12px}
+.gloss td,.gloss th{text-align:left;white-space:normal}
 footer{margin-top:40px;color:var(--muted);font-size:12px;text-align:center;border-top:1px solid var(--border);padding-top:16px}
 @media(max-width:800px){.grid-2,.grid-3{grid-template-columns:1fr}}
 </style>
@@ -57,8 +58,8 @@ footer{margin-top:40px;color:var(--muted);font-size:12px;text-align:center;borde
     <div class="chart"><canvas id="cRevenue"></canvas></div>
   </div>
   <div class="card" style="margin-top:14px">
-    <h3>Комісія Bolt 22% і ПДВ 20% на цю комісію</h3>
-    <p class="me">Витрата партнера = дохід × 22% × 1,20. Вересень — неповний місяць (1–23 вересня), у підсумки січень–серпень він не входить.</p>
+    <h3>Фактично списана комісія Bolt і ПДВ 20% на неї</h3>
+    <p class="me">Це не розрахунок «дохід × 22%». Сума взята з поля комісії в замовленні. З квітня вона дорівнює 22% вартості товарів до знижки. Знижка клієнту, яку покриває Bolt, у базу майже не входить: ціна для мерчанта після знижки нижча за ціну до знижки лише на кілька тисяч, тоді як сама знижка — на десятки тисяч. У січні ефективна ставка була 18,4%, у лютому 20,4%, з березня–квітня — договірні 22%. ПДВ 20% нараховано зверху на фактичну комісію. Вересень неповний і в підсумок не входить.</p>
     <div style="overflow-x:auto"><table id="tComm"></table></div>
   </div>
   <div class="card" style="margin-top:14px">
@@ -68,6 +69,22 @@ footer{margin-top:40px;color:var(--muted);font-size:12px;text-align:center;borde
     <div style="overflow-x:auto;margin-top:12px"><table id="tPromo"></table></div>
   </div>
   <div class="card" style="margin-top:14px">
+    <h3>Глосарій: що входить у кожен тип інвестиції Bolt</h3>
+    <table class="gloss">
+      <thead><tr><th>Тип у таблиці</th><th>Що це</th><th>Що входить</th></tr></thead>
+      <tbody>
+        <tr><td>AM / знижки на замовлення</td><td>Кампанії, які веде команда акаунтів на конкретні замовлення</td><td>Знижка на доставку, знижка від порога чека, промо, яке клієнт бачить у кошику і яке оплачує Bolt, а не мерчант</td></tr>
+        <tr><td>Маркетинг</td><td>Окремі маркетингові кампанії на попит</td><td>Промо з маркетинговим бюджетом Bolt: охоплення, сезонні офери, кампанії поза щоденною знижкою акаунта</td></tr>
+        <tr><td>Залучення нових клієнтів</td><td>Перше замовлення людини на Bolt</td><td>Знижка або субсидія доставки для нового користувача, щоб перше замовлення Hop Hey сталося саме на Bolt</td></tr>
+        <tr><td>Повернення клієнтів</td><td>Людина, яка давно не замовляла</td><td>Вінбек-промо: знижка, щоб повернути колишнього клієнта до замовлення</td></tr>
+        <tr><td>Утримання</td><td>Вже активний клієнт</td><td>Промо на повторне замовлення, щоб не віддати частоту іншому каналу</td></tr>
+        <tr><td>Життєвий цикл мережі</td><td>Кампанії на саму мережу, не на окремого клієнта</td><td>Підтримка запуску й раннього періоду точок, утримання мережі від просідання. У Hop Hey це майже весь січень–березень</td></tr>
+        <tr><td>Інше</td><td>Решта витрат Bolt на кампанії, що не потрапили в типи вище</td><td>Невеликі разові кампанії без окремого кошика. У сумі це найменший рядок</td></tr>
+      </tbody>
+    </table>
+    <p class="me" style="margin-top:8px">Усі ці суми — витрати Bolt. Частка Hop Hey у фінансуванні кампаній за цей період дорівнює нулю. Знижка клієнту не зменшує базу комісії: її оплачує Bolt окремим бюджетом.</p>
+  </div>
+  <div class="card" style="margin-top:14px">
     <h3>Ручні звірки: різницю чека Bolt покривав зі свого боку</h3>
     <p class="me">Джерело — акти Demand &amp; Supply Refunds. Відхилення = сума, на яку облік партнера вищий за GMV Bolt. Цю різницю Bolt компенсує окремо від комісії і окремо від промо.</p>
     <div style="overflow-x:auto"><table id="tRefund"></table></div>
@@ -75,13 +92,13 @@ footer{margin-top:40px;color:var(--muted);font-size:12px;text-align:center;borde
   </div>
 
   <h2>2. Ринок росте, Bolt у цьому зростанні швидший</h2>
-  <div class="note info">На графіках цього розділу немає частки ринку і немає кількості замовлень. Січень 2026 = 100. Якщо лінія Bolt іде крутіше за лінію ринку, канал росте швидше за категорію.</div>
+  <div class="note info">Висота стовпчика — рівень замовлень місяця без підписів кількості. Зелена частина стовпчика — Bolt, сіра — решта ринку. Чим зелена смуга товща відносно стовпчика, тим більша частка Bolt.</div>
   <div class="grid-2">
     <div class="card"><h3>Уся доставка в Україні</h3><div class="chart"><canvas id="cMkt"></canvas></div></div>
     <div class="card"><h3>Alcohol</h3><div class="chart"><canvas id="cAlc"></canvas></div></div>
   </div>
   <div class="card" style="margin-top:14px"><h3>Grocery</h3><div class="chart"><canvas id="cGroc"></canvas></div></div>
-  <div class="note">Від січня до серпня ринок доставки виріс до індексу 127, Bolt — до 161. В alcohol ринок 142, Bolt 182. У grocery розрив ще більший: ринок 122, Bolt 380 — роздріб на Bolt тільки набирає базу.</div>
+  <div class="note">Стовпчики від січня до серпня стають вищими, а зелена частка Bolt у кожному стовпчику — ширшою. Те саме видно в alcohol і ще виразніше в grocery: ринок додає висоту, Bolt забирає дедалі більший шмат того самого стовпчика.</div>
 
   <h3 style="margin:18px 0 8px">Два канали — не поділ одного доходу навпіл</h3>
   <p class="me" style="margin-bottom:10px">Великі grocery-мережі після підключення до Bolt. Назви прибрані: це бренд №3 і бренд №7 за розміром на ринку. Лінія «разом» — обидва агрегатори. Якщо вона вища за лінію одного каналу, другий канал додає обсяг, а не лише перекладає його.</p>
@@ -98,18 +115,18 @@ footer{margin-top:40px;color:var(--muted);font-size:12px;text-align:center;borde
   </div>
   <div class="card" style="margin-top:14px">
     <h3>Де мережа вже працює з Bolt і яка частка саме її замовлень іде через Bolt</h3>
-    <p class="me">Це не частка ринку міста. Це частка замовлень Hop Hey між двома агрегаторами за січень–серпень. У містах спільної присутності вона тримається в діапазоні приблизно 8–17% і ще росте разом із Bolt.</p>
+    <p class="me">Період: сума замовлень за січень–серпень 2026. Це не частка ринку міста, а частка замовлень Hop Hey між двома агрегаторами. Сценарій 25% рахується так: обсяг Glovo лишається як зараз, Bolt доростає, доки не стане 25% суми двох каналів. Кам'янське вже лише на Bolt, тож сценарій його не змінює.</p>
     <div style="overflow-x:auto"><table id="tCities"></table></div>
   </div>
   <div class="card" style="margin-top:14px">
     <h3>Міста, де Hop Hey є на Glovo і ще немає на Bolt</h3>
-    <p class="me">Потенціал пораховано консервативно: у містах, де обидва канали вже є, на 1 замовлення Glovo припадає 0,17 замовлення Bolt (зважене за обсягом, без Кам'янського). Той самий коефіцієнт застосовано до середнього місяця червень–серпень. Середній чек — серпневі 439 ₴.</p>
+    <p class="me">База Glovo — середній місяць червень–серпень 2026. Дві колонки Bolt: за поточною часткою міст спільної присутності (0,17 замовлення Bolt на 1 замовлення Glovo) і сценарій, де Bolt стає 25% продажів Hop Hey, а Glovo не зменшується. Середній чек — серпневі 439 ₴.</p>
     <div style="overflow-x:auto"><table id="tPot"></table></div>
     <div class="note" id="potNote"></div>
   </div>
   <div class="card" style="margin-top:14px">
     <h3>22% + ПДВ і 20% + ПДВ — на поточному обсязі і після розширення</h3>
-    <p class="me">20% + ПДВ Bolt готовий розглядати разом із виходом у нові міста, не замість нього. База «зараз» — серпень. База «після розширення» — серпень плюс потенціал нових міст.</p>
+    <p class="me">20% + ПДВ Bolt готовий розглядати разом із виходом у нові міста. База «зараз» — серпень і фактична ставка 22% від вартості до знижки. База «після розширення» — серпень плюс нові міста за сценарієм частки 25%.</p>
     <div style="overflow-x:auto"><table id="tScen"></table></div>
   </div>
   <div class="grid-2" style="margin-top:14px">
@@ -118,11 +135,19 @@ footer{margin-top:40px;color:var(--muted);font-size:12px;text-align:center;borde
       <div class="note">Спеціальні події, зокрема Октоберфест: у них потрапляють партнери, які долучаються до кампанії, а не вся вітрина підряд.</div>
       <div class="note info">Банери для алкогольних мереж, і Hop Hey у першій черзі, зараз на погодженні з legal. Це окремий інструмент видимості, якого в поточній комісії ще немає.</div>
     </div>
-    <div class="card">
-      <h3>Bolt+ уже увімкнений у вересні за рахунок Bolt</h3>
-      <p class="me">Bolt+ — знижка на доставку для підписників, коли чек досягає 500 ₴. Історично 14–17% замовлень Hop Hey і так роблять підписники. Близько 30% чеків уже від 500 ₴, тож механіка потрапляє в наявний кошик, а не вимагає змінювати асортимент.</p>
-      <div id="plusBox"></div>
-    </div>
+  </div>
+
+  <h2>4. Bolt+: окремий блок</h2>
+  <div class="note">Bolt+ — знижка на доставку для підписників, коли чек досягає 500 ₴. З вересня цю знижку для Hop Hey оплачує Bolt. Близько 30% чеків мережі вже від 500 ₴, тож механіка потрапляє в наявний кошик.</div>
+  <div class="grid-2">
+    <div class="card"><h3>Замовлення підписників і решта</h3><div class="chart"><canvas id="cPlusVol"></canvas></div></div>
+    <div class="card"><h3>Частка Bolt+ у замовленнях Hop Hey</h3><div class="chart"><canvas id="cPlusShare"></canvas></div></div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>Повні тижні: серпень проти вересня</h3>
+    <p class="me">Тиждень 31 серпня зачіпає вересень, тому в порівнянні лише повні тижні. Останній тиждень вересня (з 21-го) ще не закритий і на графік не входить.</p>
+    <div class="chart"><canvas id="cPlusWeeks"></canvas></div>
+    <div id="plusBox" style="margin-top:12px"></div>
   </div>
 
   <footer>HOP HEY × Bolt Food UA · Матеріал для обговорення утримання партнерства · 24 вересня 2026 · Конфіденційно</footer>
@@ -130,26 +155,26 @@ footer{margin-top:40px;color:var(--muted);font-size:12px;text-align:center;borde
 <script>
 const MONTHS=["Січ","Лют","Бер","Кві","Тра","Чер","Лип","Сер"];
 const fin=[
-  {m:"2026-01",orders:1282,merch:544745,rate:50.401,inc:10519,am:6.38,mkt:0,act:0,react:0,eng:0,mlc:112.18,oth:6.2,plus:214,pct500:30.0},
-  {m:"2026-02",orders:2397,merch:994447,rate:51.016,inc:25028,am:182.86,mkt:0,act:2.58,react:0,eng:0,mlc:469.17,oth:8.12,plus:363,pct500:26.8},
-  {m:"2026-03",orders:2797,merch:1149150,rate:50.733,inc:58314,am:1060.12,mkt:0,act:8.14,react:0,eng:0,mlc:161.03,oth:1.12,plus:394,pct500:26.2},
-  {m:"2026-04",orders:2941,merch:1213425,rate:51.1,inc:32097,am:578.39,mkt:0,act:16.53,react:8.97,eng:22.52,mlc:0,oth:1.94,plus:463,pct500:25.9},
-  {m:"2026-05",orders:3504,merch:1487618,rate:51.453,inc:46289,am:890.94,mkt:0,act:4.2,react:0,eng:0,mlc:0,oth:6.93,plus:481,pct500:28.4},
-  {m:"2026-06",orders:3344,merch:1438314,rate:51.515,inc:25827,am:140.39,mkt:348.77,act:10.02,react:0,eng:0,mlc:0,oth:3.36,plus:487,pct500:32.1},
-  {m:"2026-07",orders:3435,merch:1477592,rate:51.044,inc:24763,am:156.29,mkt:311.99,act:12.61,react:0,eng:0,mlc:0,oth:5.94,plus:496,pct500:32.2},
-  {m:"2026-08",orders:4064,merch:1783551,rate:51.753,inc:44881,am:813.11,mkt:0,act:52.4,react:0,eng:0,mlc:0,oth:2.88,plus:561,pct500:31.5}
+  {m:"2026-01",orders:1282,merch:544745,comm:100425,rate:50.401,inc:10519,am:6.38,mkt:0,act:0,react:0,eng:0,mlc:112.18,oth:6.2,plus:214,pct500:30.0},
+  {m:"2026-02",orders:2397,merch:994447,comm:202799,rate:51.016,inc:25028,am:182.86,mkt:0,act:2.58,react:0,eng:0,mlc:469.17,oth:8.12,plus:363,pct500:26.8},
+  {m:"2026-03",orders:2797,merch:1149150,comm:251945,rate:50.733,inc:58314,am:1060.12,mkt:0,act:8.14,react:0,eng:0,mlc:161.03,oth:1.12,plus:394,pct500:26.2},
+  {m:"2026-04",orders:2941,merch:1213425,comm:266953,rate:51.1,inc:32097,am:578.39,mkt:0,act:16.53,react:8.97,eng:22.52,mlc:0,oth:1.94,plus:463,pct500:25.9},
+  {m:"2026-05",orders:3504,merch:1487618,comm:327276,rate:51.453,inc:46289,am:890.94,mkt:0,act:4.2,react:0,eng:0,mlc:0,oth:6.93,plus:481,pct500:28.4},
+  {m:"2026-06",orders:3344,merch:1438314,comm:316429,rate:51.515,inc:25827,am:140.39,mkt:348.77,act:10.02,react:0,eng:0,mlc:0,oth:3.36,plus:487,pct500:32.1},
+  {m:"2026-07",orders:3435,merch:1477592,comm:325070,rate:51.044,inc:24763,am:156.29,mkt:311.99,act:12.61,react:0,eng:0,mlc:0,oth:5.94,plus:496,pct500:32.2},
+  {m:"2026-08",orders:4064,merch:1783551,comm:392381,rate:51.753,inc:44881,am:813.11,mkt:0,act:52.4,react:0,eng:0,mlc:0,oth:2.88,plus:561,pct500:31.5}
 ];
 const sep={orders:3034,merch:1348745,plus:490,pct500:null,note:"1–23 вересня"};
 const refunds=[
   ["Січень",11600],["Лютий",29806],["Березень",28873],["Квітень",33352],
   ["Травень",32858],["Червень",38947],["Липень",31504],["Серпень",47446]
 ];
-const mkt=[100,93.9,110.2,111.0,120.6,119.0,124.2,127.4];
-const bolt=[100,98.3,124.6,129.7,135.1,135.1,143.4,161.2];
-const alcM=[100,98.4,115.0,118.7,133.1,133.6,143.5,141.8];
-const alcB=[100,108.3,138.3,147.6,163.2,163.1,167.1,181.6];
-const grocM=[100,101.4,112.9,113.0,124.6,121.3,124.2,121.6];
-const grocB=[100,123.8,99.4,135.9,229.9,252.6,286.7,379.6];
+const mktT=[2102539,1975270,2316577,2333560,2535571,2501459,2611122,2677758];
+const mktB=[414889,407997,517149,538133,560571,560690,594864,668838];
+const alcT=[97555,96034,112140,115830,129817,130338,140024,138291];
+const alcBt=[18732,20283,25904,27648,30568,30553,31294,34022];
+const grocT=[363684,368767,410754,410953,452970,441098,451619,442085];
+const grocBt=[6986,8648,6946,9491,16061,17644,20029,26517];
 const b3g=[33800,33149,41872,42540,47586,44847,45272,43115];
 const b3t=[34193,33312,41872,42542,53754,52326,55116,57634];
 const b7g=[20284,19134,17543,14374,14095,11947,13325,13750];
@@ -171,13 +196,13 @@ const boltCost=r=> (r.am+r.mkt+r.act+r.react+r.eng+r.mlc+r.oth)*r.rate;
 
 const sumMerch=fin.reduce((s,r)=>s+r.merch,0);
 const sumOrd=fin.reduce((s,r)=>s+r.orders,0);
-const sumComm=fin.reduce((s,r)=>s+r.merch*0.264,0);
+const sumComm=fin.reduce((s,r)=>s+r.comm,0);
 const sumBolt=fin.reduce((s,r)=>s+boltCost(r),0);
 const sumRef=refunds.reduce((s,r)=>s+r[1],0);
 document.getElementById("kpis").innerHTML=[
   ["Дохід партнера, січ–сер",uah(sumMerch)],
   ["Замовлення, січ–сер",num(sumOrd)],
-  ["Комісія 22% + ПДВ",uah(sumComm)],
+  ["Фактична комісія + ПДВ",uah(sumComm*1.2)],
   ["Інвестиції Bolt у промо",uah(sumBolt)],
   ["Покриття різниці чека",uah(sumRef)],
   ["Частка мерчанта в промо","0 ₴"]
@@ -191,19 +216,18 @@ new Chart(document.getElementById("cRevenue"),{type:"bar",data:{labels:MONTHS.co
   {type:"line",label:"Замовлення",data:fin.map(r=>r.orders).concat([sep.orders]),borderColor:"#1A1A2E",yAxisID:"y1",tension:.3}
 ]},options:{...opt,scales:{...opt.scales,y:{...opt.scales.y,position:"left"},y1:{position:"right",grid:{drawOnChartArea:false},ticks:{color:"#9ca3af"}}}}});
 
-let html=`<thead><tr><th>Місяць</th><th>Дохід</th><th>Комісія 22%</th><th>ПДВ 20%</th><th>Разом до сплати</th></tr></thead><tbody>`;
+let html=`<thead><tr><th>Місяць</th><th>Дохід до знижки</th><th>Фактична комісія</th><th>Ставка від ціни до знижки</th><th>ПДВ 20%</th><th>Разом до сплати</th></tr></thead><tbody>`;
 fin.forEach((r,i)=>{
-  const c=r.merch*0.22, vat=c*0.2;
-  html+=`<tr><td>${MONTHS[i]}</td><td>${uah(r.merch)}</td><td>${uah(c)}</td><td>${uah(vat)}</td><td>${uah(c+vat)}</td></tr>`;
+  const vat=r.comm*0.2;
+  html+=`<tr><td>${MONTHS[i]}</td><td>${uah(r.merch)}</td><td>${uah(r.comm)}</td><td>${(r.comm/r.merch*100).toFixed(1)}%</td><td>${uah(vat)}</td><td>${uah(r.comm+vat)}</td></tr>`;
 });
-html+=`<tr><td>Січень–серпень</td><td>${uah(sumMerch)}</td><td>${uah(sumMerch*0.22)}</td><td>${uah(sumMerch*0.22*0.2)}</td><td><b>${uah(sumComm)}</b></td></tr>`;
-html+=`<tr><td>Вересень*</td><td>${uah(sep.merch)}</td><td>${uah(sep.merch*0.22)}</td><td>${uah(sep.merch*0.044)}</td><td>${uah(sep.merch*0.264)}</td></tr></tbody>`;
+html+=`<tr><td>Січень–серпень</td><td>${uah(sumMerch)}</td><td>${uah(sumComm)}</td><td>${(sumComm/sumMerch*100).toFixed(1)}%</td><td>${uah(sumComm*0.2)}</td><td><b>${uah(sumComm*1.2)}</b></td></tr></tbody>`;
 document.getElementById("tComm").innerHTML=html;
 
 const cats=["AM / знижки на замовлення","Маркетинг","Залучення нових клієнтів","Повернення клієнтів","Утримання","Життєвий цикл мережі","Інше"];
 const keys=["am","mkt","act","react","eng","mlc","oth"];
 new Chart(document.getElementById("cPromo"),{type:"bar",data:{labels:MONTHS,datasets:[
-  {label:"Комісія Bolt без ПДВ, ₴",data:fin.map(r=>r.merch*0.22),backgroundColor:"#1A1A2E"},
+  {label:"Фактична комісія без ПДВ, ₴",data:fin.map(r=>r.comm),backgroundColor:"#1A1A2E"},
   {label:"Інвестиції Bolt у промо, ₴",data:fin.map(boltCost),backgroundColor:"#34D186"}
 ]},options:{...opt,scales:{...opt.scales,x:{stacked:false},y:{...opt.scales.y,stacked:false}}}});
 
@@ -213,29 +237,32 @@ keys.forEach((k,ki)=>{
   phtml+=`<tr><td>${cats[ki]}</td>${cells}<td>${uah(row)}</td></tr>`;
 });
 phtml+=`<tr><td>Усього Bolt</td>${fin.map(r=>`<td>${uah(boltCost(r))}</td>`).join("")}<td><b>${uah(sumBolt)}</b></td></tr>`;
-phtml+=`<tr><td>Комісія 22% без ПДВ</td>${fin.map(r=>`<td>${uah(r.merch*0.22)}</td>`).join("")}<td>${uah(sumMerch*0.22)}</td></tr></tbody>`;
+phtml+=`<tr><td>Фактична комісія без ПДВ</td>${fin.map(r=>`<td>${uah(r.comm)}</td>`).join("")}<td>${uah(sumComm)}</td></tr></tbody>`;
 document.getElementById("tPromo").innerHTML=phtml;
 
 document.getElementById("tRefund").innerHTML=`<thead><tr><th>Місяць</th><th>Покриття Bolt, ₴</th></tr></thead><tbody>`+
   refunds.map(([m,v])=>`<tr><td>${m}</td><td>${uah(v)}</td></tr>`).join("")+
   `<tr><td>Січень–серпень</td><td><b>${uah(sumRef)}</b></td></tr></tbody>`;
-document.getElementById("refundNote").textContent=`За 8 місяців Bolt окремо покрив ${uah(sumRef)} різниці чека. Разом із промо (${uah(sumBolt)}) це ${uah(sumBolt+sumRef)} інвестицій понад комісію ${uah(sumMerch*0.22)} без ПДВ.`;
+document.getElementById("refundNote").textContent=`За 8 місяців Bolt окремо покрив ${uah(sumRef)} різниці чека. Разом із промо (${uah(sumBolt)}) це ${uah(sumBolt+sumRef)} інвестицій понад фактичну комісію ${uah(sumComm)} без ПДВ.`;
 
+const stackOpt={responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:"#6b7280",font:{size:11}}},tooltip:{callbacks:{label(ctx){
+  const sets=ctx.chart.data.datasets, i=ctx.dataIndex;
+  const tot=sets.reduce((s,d)=>s+d.data[i],0);
+  if(ctx.dataset.label==="Bolt") return "Частка Bolt у стовпчику: "+(ctx.raw/tot*100).toFixed(0)+"%";
+  return "Решта ринку";
+}}}},scales:{x:{stacked:true,ticks:{color:"#9ca3af"},grid:{display:false}},y:{stacked:true,ticks:{display:false},grid:{display:false}}}};
+function stack(id,total,boltPart){
+  new Chart(document.getElementById(id),{type:"bar",data:{labels:MONTHS,datasets:[
+    {label:"Bolt",data:boltPart,backgroundColor:"#34D186"},
+    {label:"Решта ринку",data:total.map((t,i)=>t-boltPart[i]),backgroundColor:"#d1d5db"}
+  ]},options:stackOpt});
+}
+stack("cMkt",mktT,mktB);
+stack("cAlc",alcT,alcBt);
+stack("cGroc",grocT,grocBt);
 function line(id, sets){
   new Chart(document.getElementById(id),{type:"line",data:{labels:MONTHS,datasets:sets},options:{...opt,scales:{...opt.scales,y:{...opt.scales.y,title:{display:true,text:"Січень = 100",color:"#9ca3af"}}}}});
 }
-line("cMkt",[
-  {label:"Ринок доставки",data:mkt,borderColor:"#9ca3af",tension:.3},
-  {label:"Bolt",data:bolt,borderColor:"#34D186",tension:.3,borderWidth:3}
-]);
-line("cAlc",[
-  {label:"Ринок alcohol",data:alcM,borderColor:"#9ca3af",tension:.3},
-  {label:"Bolt alcohol",data:alcB,borderColor:"#34D186",tension:.3,borderWidth:3}
-]);
-line("cGroc",[
-  {label:"Ринок grocery",data:grocM,borderColor:"#9ca3af",tension:.3},
-  {label:"Bolt grocery",data:grocB,borderColor:"#34D186",tension:.3,borderWidth:3}
-]);
 line("cB3",[
   {label:"Основний канал",data:idx(b3g),borderColor:"#9ca3af",tension:.3},
   {label:"Обидва канали разом",data:idx(b3t),borderColor:"#34D186",tension:.3,borderWidth:3}
@@ -249,22 +276,26 @@ new Chart(document.getElementById("cHH"),{type:"line",data:{labels:MONTHS,datase
   {label:"Bolt, замовлення Hop Hey",data:hhb,borderColor:"#34D186",tension:.3,borderWidth:3}
 ]},options:opt});
 
-document.getElementById("tCities").innerHTML=`<thead><tr><th>Місто</th><th>Glovo, зам.</th><th>Bolt, зам.</th><th>Частка Bolt у замовленнях мережі</th></tr></thead><tbody>`+
+document.getElementById("tCities").innerHTML=`<thead><tr><th>Місто</th><th>Glovo, зам.</th><th>Bolt зараз, зам.</th><th>Частка зараз</th><th>Bolt при 25%, зам.</th><th>Додатково за 8 міс., зам.</th><th>Додатковий дохід / міс</th></tr></thead><tbody>`+
   cities.map(([c,g,b])=>{
-    const s=g+b? b/(g+b)*100 : 100;
-    return `<tr><td>${c}</td><td>${num(g)}</td><td>${num(b)}</td><td>${s.toFixed(1)}%</td></tr>`;
+    if(!g) return `<tr><td>${c}</td><td>${num(g)}</td><td>${num(b)}</td><td>100%</td><td colspan="3">Лише Bolt, сценарій 25% не додає обсягу</td></tr>`;
+    const s=b/(g+b)*100;
+    const target=g*0.25/0.75;
+    const add=Math.max(0,target-b);
+    return `<tr><td>${c}</td><td>${num(g)}</td><td>${num(b)}</td><td>${s.toFixed(1)}%</td><td>${num(target)}</td><td>${num(add)}</td><td>${uah(add/8*AOV)}</td></tr>`;
   }).join("")+`</tbody>`;
 
-let potOrd=0, potUah=0;
+let potOrd=0, potUah=0, pot25=0, pot25Uah=0;
 let potRows=potential.map(([c,gpm])=>{
   const o=Math.round(gpm*RATIO), u=Math.round(o*AOV);
-  potOrd+=o; potUah+=u;
-  return `<tr><td>${c}</td><td>${num(gpm)}</td><td>${num(o)}</td><td>${uah(u)}</td></tr>`;
+  const o25=Math.round(gpm*0.25/0.75), u25=Math.round(o25*AOV);
+  potOrd+=o; potUah+=u; pot25+=o25; pot25Uah+=u25;
+  return `<tr><td>${c}</td><td>${num(gpm)}</td><td>${num(o)}</td><td>${uah(u)}</td><td>${num(o25)}</td><td>${uah(u25)}</td></tr>`;
 }).join("");
-document.getElementById("tPot").innerHTML=`<thead><tr><th>Місто</th><th>Glovo зараз, зам./міс</th><th>Потенціал Bolt, зам./міс</th><th>Потенційний дохід / міс</th></tr></thead><tbody>${potRows}<tr><td>Разом</td><td></td><td><b>${num(potOrd)}</b></td><td><b>${uah(potUah)}</b></td></tr></tbody>`;
-document.getElementById("potNote").textContent=`Ще близько ${uah(potUah)} доходу на місяць, якщо в цих містах Bolt візьме таку саму частку замовлень Hop Hey, як у містах, де мережа вже працює на обох платформах. Це +${num(potOrd)} замовлень на місяць до серпневих ${num(4064)}.`;
+document.getElementById("tPot").innerHTML=`<thead><tr><th>Місто</th><th>Glovo зараз, зам./міс</th><th>Bolt за поточною часткою</th><th>Дохід за поточною часткою</th><th>Bolt при 25%</th><th>Дохід при 25%</th></tr></thead><tbody>${potRows}<tr><td>Разом</td><td></td><td><b>${num(potOrd)}</b></td><td><b>${uah(potUah)}</b></td><td><b>${num(pot25)}</b></td><td><b>${uah(pot25Uah)}</b></td></tr></tbody>`;
+document.getElementById("potNote").textContent=`Якщо в цих містах Bolt візьме 25% продажів Hop Hey і Glovo не просяде, це +${num(pot25)} замовлень і ${uah(pot25Uah)} доходу на місяць. За поточною часткою міст, де мережа вже на обох платформах, потенціал менший: +${num(potOrd)} замовлень і ${uah(potUah)}.`;
 
-const now=1783551, exp=now+potUah;
+const now=1783551, exp=now+pot25Uah;
 function scen(base, rate){
   const fee=base*rate*1.2, net=base-fee;
   return [uah(base), uah(fee), uah(net)];
@@ -279,10 +310,18 @@ document.getElementById("tScen").innerHTML=`<thead><tr><th>Сценарій</th>
   rows.map(r=>`<tr>${r.map(x=>`<td>${x}</td>`).join("")}</tr>`).join("")+`</tbody>`;
 
 const plusShare=fin.map(r=>+(r.plus/r.orders*100).toFixed(1));
-document.getElementById("plusBox").innerHTML=`
-  <p>Частка замовлень від підписників Bolt+ по місяцях: ${plusShare.map((p,i)=>MONTHS[i]+" "+p+"%").join(", ")}.</p>
-  <p style="margin-top:8px">Два повні тижні вересня (7–13 і 14–20): 980 і 949 замовлень проти ~920 у середній тиждень серпня. Частка Bolt+ у вересні (1–23) — ${(sep.plus/sep.orders*100).toFixed(1)}%. Ефект ще ранній, але напрям додатний, і знижку на доставку оплачує Bolt, не партнер.</p>
-  <p style="margin-top:8px">Обережна оцінка: +5% до серпневого доходу від ширшого використання порога 500 ₴ дає ще близько ${uah(now*0.05)} на місяць без витрат Hop Hey.</p>`;
+new Chart(document.getElementById("cPlusVol"),{type:"bar",data:{labels:MONTHS.concat(["Вер*"]),datasets:[
+  {label:"Bolt+",data:fin.map(r=>r.plus).concat([sep.plus]),backgroundColor:"#34D186"},
+  {label:"Без підписки",data:fin.map(r=>r.orders-r.plus).concat([sep.orders-sep.plus]),backgroundColor:"#d1d5db"}
+]},options:{...opt,scales:{x:{stacked:true,ticks:{color:"#9ca3af"},grid:{display:false}},y:{stacked:true,ticks:{color:"#9ca3af"},grid:{color:"rgba(0,0,0,.05)"}}}}});
+new Chart(document.getElementById("cPlusShare"),{type:"line",data:{labels:MONTHS.concat(["Вер*"]),datasets:[
+  {label:"Частка Bolt+, %",data:plusShare.concat([+(sep.plus/sep.orders*100).toFixed(1)]),borderColor:"#34D186",backgroundColor:"rgba(52,209,134,.15)",fill:true,tension:.3}
+]},options:opt});
+new Chart(document.getElementById("cPlusWeeks"),{type:"bar",data:{labels:["3–9 сер","10–16 сер","17–23 сер","24–30 сер","7–13 вер","14–20 вер"],datasets:[
+  {label:"Усі замовлення",data:[972,885,912,904,980,949],backgroundColor:"#1A1A2E"},
+  {label:"З них Bolt+",data:[136,109,118,142,159,155],backgroundColor:"#34D186"}
+]},options:opt});
+document.getElementById("plusBox").innerHTML=`<p>Два повні тижні вересня вищі за середній повний тиждень серпня (918 замовлень): 980 і 949. Частка Bolt+ за 1–23 вересня — ${(sep.plus/sep.orders*100).toFixed(1)}% проти 13,8% у серпні. Знижку на доставку від чека 500 ₴ оплачує Bolt. Обережна оцінка подальшого ефекту: +5% до серпневого доходу, близько ${uah(now*0.05)} на місяць, без витрат Hop Hey.</p>`;
 </script>
 </body>
 </html>
